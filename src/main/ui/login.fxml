@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField layoutX="340.0" layoutY="471.0" prefHeight="87.0" prefWidth="628.0" />
+      <Text layoutX="362.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="218.099853515625">
+         <font>
+            <Font name="SansSerif Bold" size="67.0" />
+         </font>
+      </Text>
+      <Line endX="290.70123291015625" endY="3.0517578125E-5" layoutX="632.0" layoutY="139.0" startX="-290.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" />
+      <TextField alignment="CENTER" layoutX="340.0" layoutY="277.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="85.0" prefWidth="630.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </TextField>
+      <Text layoutX="343.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <Text layoutX="346.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="175.41702270507812">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
