@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.user.CreateBookingController">
+    <children>
+        <Text layoutX="230.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User panel" wrappingWidth="451.099853515625" AnchorPane.bottomAnchor="525.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="599.0" AnchorPane.topAnchor="41.0">
+            <font>
+                <Font name="SansSerif Bold" size="67.0" />
+            </font>
+        </Text>
+        <Line endX="509.0355224609375" endY="4.57763671875E-5" layoutX="533.0" layoutY="120.0" startX="-300.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" AnchorPane.leftAnchor="229.85586547851562" AnchorPane.rightAnchor="235.46444702148438" />
+        <Label fx:id="isConnected" layoutX="14.0" layoutY="672.0" prefHeight="34.0" prefWidth="650.0" text="Status" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="616.0" AnchorPane.topAnchor="672.0">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Label>
+        <Text layoutX="246.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new booking" wrappingWidth="264.9154357910156">
+            <font>
+                <Font size="29.0" />
+            </font>
+        </Text>
+        <ImageView fx:id="backButton" fitHeight="76.0" fitWidth="83.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#goBack" preserveRatio="true">
+            <image>
+                <Image url="@../../img/backButton.png" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>
