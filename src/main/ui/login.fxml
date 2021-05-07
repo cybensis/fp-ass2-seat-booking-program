@@ -1,34 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.LoginController">
    <children>
-      <TextField layoutX="340.0" layoutY="471.0" prefHeight="87.0" prefWidth="628.0" />
-      <Text layoutX="362.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="218.099853515625">
+      <TextField fx:id="txtUsername" layoutX="386.0" layoutY="392.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="509.0" AnchorPane.leftAnchor="386.0" AnchorPane.rightAnchor="385.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <font>
+            <Font name="SansSerif Regular" size="24.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtPassword" layoutX="384.0" layoutY="248.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="509.0" AnchorPane.leftAnchor="384.0" AnchorPane.rightAnchor="387.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <font>
+            <Font name="SansSerif Regular" size="24.0" />
+         </font>
+      </TextField>
+      <Button layoutX="760.0" layoutY="480.0" mnemonicParsing="false" onAction="#Login" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Login" textFill="WHITE" AnchorPane.bottomAnchor="197.0" AnchorPane.leftAnchor="760.0" AnchorPane.rightAnchor="387.0" AnchorPane.topAnchor="480.0">
+         <font>
+            <Font name="SansSerif Bold" size="17.0" />
+         </font>
+      </Button>
+      <Text layoutX="352.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="218.099853515625" AnchorPane.bottomAnchor="548.8017578125" AnchorPane.leftAnchor="352.0" AnchorPane.rightAnchor="709.900146484375" AnchorPane.topAnchor="96.3466796875">
          <font>
             <Font name="SansSerif Bold" size="67.0" />
          </font>
       </Text>
-      <Line endX="290.70123291015625" endY="3.0517578125E-5" layoutX="632.0" layoutY="139.0" startX="-290.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" />
-      <TextField alignment="CENTER" layoutX="340.0" layoutY="277.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="85.0" prefWidth="630.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <Text layoutX="343.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+      <Text layoutX="384.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" AnchorPane.bottomAnchor="472.96875" AnchorPane.leftAnchor="384.0" AnchorPane.rightAnchor="753.890625" AnchorPane.topAnchor="204.46875">
          <font>
-            <Font size="35.0" />
+            <Font size="32.0" />
          </font>
       </Text>
-      <Text layoutX="346.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="175.41702270507812">
+      <Text layoutX="384.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="175.41702270507812" AnchorPane.bottomAnchor="328.96875" AnchorPane.leftAnchor="384.0" AnchorPane.rightAnchor="720.5829772949219" AnchorPane.topAnchor="348.46875">
          <font>
-            <Font size="35.0" />
+            <Font size="32.0" />
+         </font>
+      </Text>
+      <Text fill="#3946ff" layoutX="348.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forgot your password?" underline="true" wrappingWidth="356.4170227050781" AnchorPane.bottomAnchor="207.9765625" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="575.5829772949219" AnchorPane.topAnchor="480.1015625">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Line endX="300.0" endY="6.103515625E-5" layoutX="639.0" layoutY="185.0" startX="-300.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" AnchorPane.leftAnchor="334.5355529785156" AnchorPane.rightAnchor="337.4644470214844" />
+      <Line endX="300.0" endY="6.103515625E-5" layoutX="638.0" layoutY="559.0" startX="-300.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" AnchorPane.leftAnchor="333.5355529785156" AnchorPane.rightAnchor="338.4644470214844" />
+      <Label fx:id="isConnected" layoutX="14.0" layoutY="672.0" prefHeight="34.0" prefWidth="650.0" text="Status" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="616.0" AnchorPane.topAnchor="672.0">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Text fx:id="registerAccount" fill="#3946ff" layoutX="612.0" layoutY="644.0" onMouseClicked="#changeSceneRegister" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account yet?" underline="true" wrappingWidth="356.4170227050781">
+         <font>
+            <Font size="24.0" />
          </font>
       </Text>
    </children>

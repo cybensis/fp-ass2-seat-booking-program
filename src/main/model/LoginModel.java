@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import main.BCrypt;
 
 public class LoginModel {
 
@@ -32,16 +33,18 @@ public class LoginModel {
     public Boolean isLogin(String user, String pass) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
-        String query = "select * from employee where username = ? and password= ?";
+        String query = "select username,password from user where username = ?";
         try {
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
 
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return true;
+                String storedHash = resultSet.getString("password");
+                if (BCrypt.checkpw(pass, storedHash))
+                    return true;
+                return false;
             }
             else{
                 return false;
@@ -51,8 +54,10 @@ public class LoginModel {
         {
             return false;
         }finally {
-           preparedStatement.close();
-           resultSet.close();
+            if (preparedStatement != null)
+                preparedStatement.close();
+            if (resultSet != null)
+                resultSet.close();
         }
 
     }

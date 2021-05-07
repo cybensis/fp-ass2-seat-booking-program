@@ -1,10 +1,16 @@
 package main.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import main.model.LoginModel;
 import main.BCrypt;
 
@@ -14,14 +20,15 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
     public LoginModel loginModel = new LoginModel();
-    //public BCrypt bcrypt = new BCrypt();
-    String hashed1 = BCrypt.hashpw("test", BCrypt.gensalt());
     @FXML
     private Label isConnected;
     @FXML
     private TextField txtUsername;
     @FXML
     private TextField txtPassword;
+    @FXML
+    private Text registerAccount;
+
 
 
     // Check database connection
@@ -37,12 +44,19 @@ public class LoginController implements Initializable {
     /* login Action method
        check if user input is the same as database.
      */
+
+    public void changeSceneRegister() throws Exception {
+        Parent registerView = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/register.fxml"));
+        Stage window = (Stage) registerAccount.getScene().getWindow();
+        window.setScene(new Scene(registerView));
+        window.show();
+    }
+
     public void Login(ActionEvent event){
 
         try {
             if (loginModel.isLogin(txtUsername.getText(),txtPassword.getText())){
 
-                isConnected.setText(hashed1);
             }else{
                 isConnected.setText("username and password is incorrect");
             }
@@ -50,6 +64,8 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
 
 
 
