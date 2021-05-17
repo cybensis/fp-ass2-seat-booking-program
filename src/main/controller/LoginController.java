@@ -1,25 +1,23 @@
 package main.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import main.Singleton;
 import main.model.LoginModel;
-import main.BCrypt;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    public LoginModel loginModel = new LoginModel();
+    private LoginModel loginModel = new LoginModel();
+    private Singleton singleton = Singleton.getInstance();
+
     @FXML
     private Label isConnected;
     @FXML
@@ -45,27 +43,36 @@ public class LoginController implements Initializable {
        check if user input is the same as database.
      */
 
-    public void changeSceneRegister() throws Exception {
-        Parent registerView = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/register.fxml"));
-        Stage window = (Stage) registerAccount.getScene().getWindow();
-        window.setScene(new Scene(registerView));
-        window.show();
+    public void changeSceneRegister(MouseEvent event) throws Exception {
+        singleton.changeScene("main/ui/register.fxml");
     }
 
-    public void Login(ActionEvent event){
+    public void login(MouseEvent event){
 
         try {
-            if (loginModel.isLogin(txtUsername.getText(),txtPassword.getText())){
+            //atemptLogin is set to either false, meaning the login failed, or is set to the users account type
+            String attemptLogin = loginModel.isLogin(txtUsername.getText().trim(),txtPassword.getText().trim());
+            System.out.println(attemptLogin);
+            if (!attemptLogin.equals("false")){
+                System.out.println("test");
+                singleton.setUser(attemptLogin);
+                if (attemptLogin.equals("basic"))
+                    singleton.changeScene("main/ui/user/userHome.fxml");
+                else if (attemptLogin.equals("admin"))
+                    singleton.changeScene("main/ui/admin/adminHome.fxml");
 
             }else{
                 isConnected.setText("username and password is incorrect");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    @FXML
+    private void resetPassword(MouseEvent event) throws IOException {
+        singleton.changeScene("main/ui/resetPassword.fxml");
+    }
 
 
 

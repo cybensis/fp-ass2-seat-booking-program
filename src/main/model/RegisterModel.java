@@ -29,7 +29,7 @@ public class RegisterModel {
         }
     }
 
-    public String attempRegister(Integer employeeID, String role, String firstName, String surname, String username, String password, String secretQ, String secretQAnswer) throws SQLException {
+    public String attempRegister(Integer employeeID, String role, String firstName, String surname, String username, String password, String secretQ, String secretQAnswer, int accountTypeID) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
         String query = "select username,employeeID from user where username = ? OR employeeID = ?";
@@ -50,7 +50,7 @@ public class RegisterModel {
                 String hashedPassword = BCrypt.hashpw(password,BCrypt.gensalt());
                 preparedStatement = null;
                 resultSet=null;
-                String insertQuery = "INSERT INTO user (firstName,lastName,password,employeeID,secretQuestion,secretQuestionAnswer,username,employeeRole) VALUES (?,?,?,?,?,?,?,?)";
+                String insertQuery = "INSERT INTO user (firstName,lastName,password,employeeID,secretQuestion,secretQuestionAnswer,username,employeeRole, accountType) VALUES (?,?,?,?,?,?,?,?,?)";
                 preparedStatement = connection.prepareStatement(insertQuery);
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, surname);
@@ -60,7 +60,8 @@ public class RegisterModel {
                 preparedStatement.setString(6, secretQAnswer);
                 preparedStatement.setString(7, username);
                 preparedStatement.setString(8, role);
-                int row = preparedStatement.executeUpdate();
+                preparedStatement.setInt(8, accountTypeID);
+                int response = preparedStatement.executeUpdate();
                 return "Success";
             }
         }

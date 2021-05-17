@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.admin.AdminHomeController">
+   <children>
+      <Text layoutX="230.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin panel" wrappingWidth="451.099853515625" AnchorPane.bottomAnchor="525.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="599.0" AnchorPane.topAnchor="41.0">
+         <font>
+            <Font name="SansSerif Bold" size="67.0" />
+         </font>
+      </Text>
+      <Text layoutX="236.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." wrappingWidth="14.417022705078125" AnchorPane.bottomAnchor="494.7060546875" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="1029.5829772949219" AnchorPane.topAnchor="165.4404296875">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Line endX="509.0355224609375" endY="4.57763671875E-5" layoutX="533.0" layoutY="120.0" startX="-300.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" AnchorPane.leftAnchor="229.85586547851562" AnchorPane.rightAnchor="235.46444702148438" />
+      <Label fx:id="isConnected" layoutX="14.0" layoutY="672.0" prefHeight="34.0" prefWidth="650.0" text="Status" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="616.0" AnchorPane.topAnchor="672.0">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Text fx:id="dotPointOne" fill="#3946ff" layoutX="251.0" layoutY="216.0" onMouseClicked="#seatingManagement" strokeType="OUTSIDE" strokeWidth="0.0" text="Seating management" underline="true" wrappingWidth="356.4170227050781">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="236.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." wrappingWidth="14.417022705078125">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Text fx:id="dotPointTwo" fill="#3946ff" layoutX="251.0" layoutY="273.0" onMouseClicked="#accountManagement" strokeType="OUTSIDE" strokeWidth="0.0" text="Account management" underline="true" wrappingWidth="356.4170227050781">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="backButton" fitHeight="76.0" fitWidth="83.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#goBack" preserveRatio="true">
+         <image>
+            <Image url="@../../img/backButton.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="subHeader" layoutX="243.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin options" wrappingWidth="451.099853515625">
+         <font>
+            <Font name="SansSerif Bold" size="29.0" />
+         </font>
+      </Text>
+      <Text layoutX="236.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." wrappingWidth="14.417022705078125">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Text fx:id="dotPointThree" fill="#3946ff" layoutX="251.0" layoutY="330.0" onMouseClicked="#generateReports" strokeType="OUTSIDE" strokeWidth="0.0" text="Generate reports" underline="true" wrappingWidth="356.4170227050781">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="236.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." wrappingWidth="14.417022705078125">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Text fx:id="dotPointFour" fill="#3946ff" layoutX="251.0" layoutY="387.0" onMouseClicked="#graphicVisualisation" strokeType="OUTSIDE" strokeWidth="0.0" text="Graphic visualisation" underline="true" wrappingWidth="356.4170227050781">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

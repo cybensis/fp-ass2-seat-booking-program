@@ -30,29 +30,31 @@ public class LoginModel {
         }
     }
 
-    public Boolean isLogin(String user, String pass) throws SQLException {
+    public String isLogin(String user, String pass) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
-        String query = "select username,password from user where username = ?";
+        String query = "SELECT user.password, accountTypes.accountType FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.username = ?";
         try {
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user);
-
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String storedHash = resultSet.getString("password");
-                if (BCrypt.checkpw(pass, storedHash))
-                    return true;
-                return false;
+                System.out.println(BCrypt.checkpw(pass, storedHash));
+                if (BCrypt.checkpw(pass, storedHash)) {
+                    System.out.println("test");
+                    return resultSet.getString("accountType");
+                }
+                return "false";
             }
             else{
-                return false;
+                return "false";
             }
         }
         catch (Exception e)
         {
-            return false;
+            return "false";
         }finally {
             if (preparedStatement != null)
                 preparedStatement.close();

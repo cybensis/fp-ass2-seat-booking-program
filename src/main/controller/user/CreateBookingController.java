@@ -2,49 +2,108 @@ package main.controller.user;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Singleton;
+import main.model.user.CreateBookingModel;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CreateBookingController {
+    static final int NEIGHBOR_DESK_OFFSET = 1;
+
+    private Singleton singleton = Singleton.getInstance();
+    private CreateBookingModel createBookingModel = new CreateBookingModel();
+    private Rectangle[] rectangleContainer;
+    ArrayList<Integer> tablesBooked;
 
     @FXML
-    private Label isConnected;
+    private Button accept;
 
     @FXML
-    private Text newBooking;
-
-    @FXML
-    private Text manageBooking;
+    private Button cancel;
 
     @FXML
     private ImageView backButton;
 
     @FXML
-    public void goBack(MouseEvent event) throws IOException {
-        Parent loginView = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/login.fxml"));
-        Stage window = (Stage) backButton.getScene().getWindow();
-        window.setScene(new Scene(loginView));
-        window.show();
-    }
+    private Text sceneHeader;
 
     @FXML
-    void manageBookingNav(MouseEvent event) {
-
-    }
+    private Rectangle seat_0,seat_1,seat_2,seat_3,seat_4,seat_5,seat_6,seat_7,seat_8,seat_9,seat_10,seat_11,seat_12,seat_13,seat_14,seat_15;
 
     @FXML
-    void newBookingNav(MouseEvent event) throws IOException {
-        Parent loginView = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/user/createBooking.fxml"));
-        Stage window = (Stage) backButton.getScene().getWindow();
-        window.setScene(new Scene(loginView));
-        window.show();
+    private void initialize() throws SQLException, IOException {
+        this.rectangleContainer = new Rectangle[]{seat_0,seat_1,seat_2,seat_3,seat_4,seat_5,seat_6,seat_7,seat_8,seat_9,seat_10,seat_11,seat_12,seat_13,seat_14,seat_15};
+        LocalDate chosenDate = singleton.getDate();
+        sceneHeader.setText("Create a new booking - " + chosenDate);
+        int lastBookedSeat = createBookingModel.getLastSatDesk(singleton.getUser());
+            for (int i = 0; i < rectangleContainer.length; i++) {
+                int deskID = i;
+                this.rectangleContainer[i].setOnMouseClicked(event -> {
+                    singleton.setChosenDesk(deskID);
+                    Node source = (Node) event.getSource();
+                    Stage popup = new Stage();
+                    popup.initModality(Modality.APPLICATION_MODAL);
+                    popup.initOwner(source.getScene().getWindow());
+                    Parent root = null;
+                    try {
+                        root = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/user/createBookingPopup.fxml"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                     }
+                    Scene testScene = new Scene(root, 600, 300);
+                    popup.setScene(testScene);
+                    popup.show();
+                });
+            }
+            this.tablesBooked = createBookingModel.blacklistedDesks(chosenDate, singleton.getUser());
+            int deskID;
+                for (int i = 0; i < tablesBooked.size(); i++) {
+                    deskID = tablesBooked.get(i);
+                    disableSeat(deskID, "booked");
+
+                    // The below code block changes the neighboring seats of already booked seats to orange, to represent
+                    // the COVID conditions that disallow people to sit right next to each other by applying -1 or +1 to
+                    // the current deskID. The reason for this if statement is to make sure that no illegal array index
+                    // is accessed, e.g., if deskID is 0, and - 1 is applied to retrieve the corresponding
+                    // rectangleContainer for its neighbor desk, then it tries to access index -1 which is illegal, and
+                    // the same goes for trying to access the max value + 1.
+                    if (deskID > 0 && deskID < rectangleContainer.length) {
+                        disableSeat(deskID - NEIGHBOR_DESK_OFFSET, "covid");
+                        disableSeat(deskID + NEIGHBOR_DESK_OFFSET, "covid");
+                   }
+            }
+                disableSeat(lastBookedSeat, "covid");
+        }
+
+        private void disableSeat(int deskID, String condition) {
+            if (!rectangleContainer[deskID].isDisabled() && condition.equals("covid"))
+                rectangleContainer[deskID].setFill(Paint.valueOf("ORANGE"));
+            else if (!rectangleContainer[deskID].isDisabled() && condition.equals("booked"))
+                rectangleContainer[deskID].setFill(Paint.valueOf("RED"));
+            rectangleContainer[deskID].setDisable(true);
+        }
+
+    @FXML
+    private void goBack(MouseEvent event) throws IOException {
+        singleton.setUpdateBooking(false);
+        singleton.changeScene("main/ui/user/chooseDate.fxml");
+
     }
+
+
 
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.user.CreateBookingPopupController">
+    <children>
+        <Text fx:id="popupText" layoutX="74.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure you want to book this seat?" textAlignment="CENTER" wrappingWidth="451.099853515625" AnchorPane.bottomAnchor="176.16552734375" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="74.900146484375" AnchorPane.topAnchor="30.8837890625">
+            <font>
+                <Font name="SansSerif Bold" size="41.0" />
+            </font>
+        </Text>
+      <Button fx:id="accept" layoutX="379.0" layoutY="201.0" mnemonicParsing="false" onMouseClicked="#acceptBooking" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3; -fx-cursor: hand;" text="Accept" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="cancel" layoutX="74.0" layoutY="201.0" mnemonicParsing="false" onMouseClicked="#cancelBooking" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3; -fx-cursor: hand;" text="Cancel" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="17.0" />
+         </font>
+      </Button>
+      <Text fx:id="homepageNav" fill="#2d30e1" layoutX="87.0" layoutY="230.0" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to go back to the homepage" textAlignment="CENTER" visible="false" wrappingWidth="451.099853515625">
+         <font>
+            <Font name="SansSerif Regular" size="23.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>

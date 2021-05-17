@@ -2,23 +2,20 @@ package main.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import main.model.LoginModel;
+import main.Singleton;
 import main.model.RegisterModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class RegisterController {
+        private Singleton singleton = Singleton.getInstance();
         public RegisterModel registerModel = new RegisterModel();
 
         @FXML
@@ -56,15 +53,27 @@ public class RegisterController {
 
         @FXML
         public void submit(ActionEvent event) throws SQLException {
-                System.out.println(registerModel.attempRegister(Integer.parseInt(employeeid.getText()),role.getText(),firstName.getText(),surname.getText(),username.getText(),password.getText(),secretQ.getText(),secretQAnswer.getText()));
+                int employeeID;
+
+                // ALSO DO A CHECK HERE, FOR IF entry.trim() is different to entry, THEN SAY ERROR, NO SPACES ALLOWED
+                String registerFieldData[] = new String[] {this.employeeid.getText(), role.getText(), firstName.getText(), surname.getText(), username.getText(), password.getText(), secretQ.getText(), secretQAnswer.getText()};
+                for (int i = 0; i < registerFieldData.length; i++) {
+                        if (registerFieldData[i].length() == 0)
+                                System.out.println("error");
+                                // Just have a general error saying, Please make sure you fill in all your fields loser.
+                }
+                try {
+                        employeeID = Integer.parseInt(this.employeeid.getText());
+                        System.out.println(registerModel.attempRegister(employeeID,role.getText(),firstName.getText(),surname.getText(),username.getText(),password.getText(),secretQ.getText(),secretQAnswer.getText(), 1));
+                }
+                catch (NumberFormatException error) {
+                        // Set error message to Incorrect EmployeeID format, also check for length of all strings
+                }
         }
 
         @FXML
         public void goBack(MouseEvent event) throws IOException {
-                Parent loginView = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/login.fxml"));
-                Stage window = (Stage) backButton.getScene().getWindow();
-                window.setScene(new Scene(loginView));
-                window.show();
+                singleton.changeScene("main/ui/login.fxml");
         }
 
 }
