@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.admin.AddUpdateAccountPopupController">
+    <children>
+        <Text fx:id="mainHeader" layoutX="86.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This account has been added" textAlignment="CENTER" wrappingWidth="451.099853515625" AnchorPane.bottomAnchor="173.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="62.900146484375" AnchorPane.topAnchor="29.0">
+            <font>
+                <Font name="SansSerif Bold" size="41.0" />
+            </font>
+        </Text>
+      <Text fx:id="homepageNav" fill="#2d30e1" layoutX="86.0" layoutY="205.0" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to go back to the homepage" textAlignment="CENTER" wrappingWidth="451.099853515625">
+         <font>
+            <Font name="SansSerif Regular" size="23.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>

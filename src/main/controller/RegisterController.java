@@ -64,7 +64,7 @@ public class RegisterController {
                 }
                 try {
                         employeeID = Integer.parseInt(this.employeeid.getText());
-                        System.out.println(registerModel.attempRegister(employeeID,role.getText(),firstName.getText(),surname.getText(),username.getText(),password.getText(),secretQ.getText(),secretQAnswer.getText(), 1));
+                        System.out.println(registerModel.attemptRegister(employeeID,role.getText(),firstName.getText(),surname.getText(),username.getText(),password.getText(),secretQ.getText(),secretQAnswer.getText(), 1));
                 }
                 catch (NumberFormatException error) {
                         // Set error message to Incorrect EmployeeID format, also check for length of all strings

@@ -14,10 +14,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Singleton {
+    // Holds the username of the logged in user
     private String username;
+
+    // Holds the date selected by the user, used in various parts of the application
     private LocalDate chosenDate;
+
+    // Holds the id of the desk chosen by the user
     private int chosenDeskID;
-    private Stage mainStage;
+
+    // In the admin panel, there are multiple parts that are reused, such as the addUpdateAccount.fxml. This is used to
+    // add not only new employee accounts, but admin accounts, one array index is needed to differentiate between which
+    // account type is being modified. On top of this, addUpdateAccount.fxml, can also be used to update the details of
+    // an existing account, so now we need an array index for 2 other things, 1. To determine whether
+    // addUpdateAccount.fxml is being used to update an account, or create a new one, 2. To determine which user is
+    // having their account modified.
+    // Index 0 = EmployeeID, Index 1 = Account Type, Index 2 = Update or Adding account
+    private Map<String ,String> accountManagementDetails = new HashMap<String, String>();
+    // Holds the stage from the Main class, this is to help changing scenes.
+    public Stage mainStage;
+
+    // Since createBooking.fxml is used in both creating a new booking, and also modifying an existing booking, a
+    // boolean variable is used to differentiate between whether the user is modifying a booking or creating a new one.
     private boolean updateBooking;
 
     // Holds scene titles mapped to its corresponding fxml file, preventing the need to manually go through every scene
@@ -35,6 +53,10 @@ public class Singleton {
         sceneTitle.put("main/ui/resetPassword.fxml", "Reset password");
         sceneTitle.put("main/ui/admin/adminHome.fxml", "Admin panel");
         sceneTitle.put("main/ui/admin/accountManagement.fxml", "Admin panel - Account management");
+        sceneTitle.put("main/ui/admin/addUpdateAccount.fxml", "Admin panel - Account management");
+        accountManagementDetails.put("employeeID", "");
+        accountManagementDetails.put("accountType", "");
+        accountManagementDetails.put("updateOrAdd", "");
         updateBooking = false;
     }
 
@@ -76,4 +98,9 @@ public class Singleton {
 
     public void setUpdateBooking(boolean isUpdating) {this.updateBooking = isUpdating;};
     public boolean getUpdateBooking() {return this.updateBooking;};
+
+
+    public void setAccountManagementDetails(String newDetails, String index) { this.accountManagementDetails.put(index, newDetails);};
+    public String getAccountManagementDetails(String index) {return this.accountManagementDetails.get(index);};
+
 }

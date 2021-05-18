@@ -1,6 +1,5 @@
 package main.controller.admin;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -32,22 +31,35 @@ public class AccountManagementController {
     private Text dotPointThree;
 
     @FXML
+    private void initialize() {
+        if (!this.singleton.getAccountManagementDetails("accountType").equals(""))
+            updateDotPoints(this.singleton.getAccountManagementDetails("accountType"));
+
+    }
+
+    @FXML
     private void goBack(MouseEvent event) throws IOException {
-        singleton.changeScene("main/ui/admin/accountManagement.fxml");
+        if (!this.singleton.getAccountManagementDetails("accountType").equals("")) {
+            this.singleton.setAccountManagementDetails("", "accountType");
+            this.singleton.changeScene("main/ui/admin/accountManagement.fxml");
+        }
+        else
+            this.singleton.changeScene("main/ui/admin/adminHome.fxml");
+
     }
 
     @FXML
     private void manageAdmin(MouseEvent event) {
-        this.subHeader.setText("Account Management - Admin");
-        updateDotPoints();
+        this.singleton.setAccountManagementDetails("admin", "accountType");
+        updateDotPoints("admin");
 
 
     }
 
     @FXML
     private void manageEmployees(MouseEvent event) {
-        this.subHeader.setText("Account Management - Employees");
-        updateDotPoints();
+        this.singleton.setAccountManagementDetails("employee", "accountType");
+        updateDotPoints("employee");
     }
 
     @FXML
@@ -55,30 +67,49 @@ public class AccountManagementController {
 
     }
 
-    private void updateDotPoints() {
+    private void updateDotPoints(String accountType) {
+        if (accountType.equals("admin"))
+            this.subHeader.setText("Account Management - Admin");
+        else if (accountType.equals("employee"))
+            this.subHeader.setText("Account Management - Employees");
+
         this.dotPointOne.setText("Add new account");
-        this.dotPointOne.setOnMouseClicked(event -> {addNewAccount();});
+        this.dotPointOne.setOnMouseClicked(event -> {
+            this.singleton.setAccountManagementDetails("addAccount", "updateOrAdd");
+            try {
+                this.singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         this.dotPointTwo.setText("Update account details");
-        this.dotPointTwo.setOnMouseClicked(event -> {updateAcccount();});
+        this.dotPointTwo.setOnMouseClicked(event -> {
+            this.singleton.setAccountManagementDetails("updateAccount", "updateOrAdd");
+            try {
+                this.singleton.changeScene("main/ui/admin/selectUser.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         this.dotPointThree.setText("Delete account");
-        this.dotPointThree.setOnMouseClicked(event -> {deleteAccount();});
+        this.dotPointThree.setOnMouseClicked(event -> {
+            this.singleton.setAccountManagementDetails("deleteAccount", "updateOrAdd");
+            try {
+                this.singleton.changeScene("main/ui/admin/selectUser.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
 
 
     }
 
-    private void addNewAccount() {
 
-    }
-
-    private void updateAcccount() {
-
-    }
 
     private void deleteAccount() {
 
     }
-
 }

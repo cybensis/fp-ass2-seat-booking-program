@@ -64,8 +64,8 @@ public class CreateBookingController {
                     } catch (IOException e) {
                         e.printStackTrace();
                      }
-                    Scene testScene = new Scene(root, 600, 300);
-                    popup.setScene(testScene);
+                    Scene popupScene = new Scene(root, 600, 300);
+                    popup.setScene(popupScene);
                     popup.show();
                 });
             }
