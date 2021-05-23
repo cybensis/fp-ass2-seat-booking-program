@@ -51,12 +51,12 @@
             <Font name="SansSerif Bold" size="29.0" />
          </font>
       </Text>
-      <Text layoutX="236.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." wrappingWidth="14.417022705078125">
+      <Text fx:id="dotThree" layoutX="236.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." visible="false" wrappingWidth="14.417022705078125">
          <font>
             <Font size="45.0" />
          </font>
       </Text>
-      <Text fx:id="dotPointThree" fill="#3946ff" layoutX="251.0" layoutY="330.0" onMouseClicked="#modifyBlacklist" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify blacklist" underline="true" wrappingWidth="356.4170227050781">
+      <Text fx:id="dotPointThree" fill="#3946ff" layoutX="251.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dot point three" underline="true" visible="false" wrappingWidth="356.4170227050781">
          <font>
             <Font size="24.0" />
          </font>

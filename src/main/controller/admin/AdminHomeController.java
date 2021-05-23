@@ -56,8 +56,8 @@ public class AdminHomeController {
         }
 
         @FXML
-        private void seatingManagement(MouseEvent event) throws IOException {
-            singleton.changeScene("main/ui/admin/accountManagement.fxml");
+        private void bookingManagement(MouseEvent event) throws IOException {
+            singleton.changeScene("main/ui/admin/bookingManagement.fxml");
 
         }
 

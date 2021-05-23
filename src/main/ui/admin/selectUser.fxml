@@ -46,5 +46,10 @@
             <Image url="@../../img/backButton.png" />
          </image>
       </ImageView>
+      <Text fx:id="errorText" fill="#e10505" layoutX="393.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error text" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

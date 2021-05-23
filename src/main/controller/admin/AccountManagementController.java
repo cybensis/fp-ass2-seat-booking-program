@@ -31,6 +31,9 @@ public class AccountManagementController {
     private Text dotPointThree;
 
     @FXML
+    private Text dotThree;
+
+    @FXML
     private void initialize() {
         if (!this.singleton.getAccountManagementDetails("accountType").equals(""))
             updateDotPoints(this.singleton.getAccountManagementDetails("accountType"));
@@ -62,12 +65,9 @@ public class AccountManagementController {
         updateDotPoints("employee");
     }
 
-    @FXML
-    private void modifyBlacklist(MouseEvent event) {
-
-    }
-
     private void updateDotPoints(String accountType) {
+        this.dotPointThree.setVisible(true);
+        this.dotThree.setVisible(true);
         if (accountType.equals("admin"))
             this.subHeader.setText("Account Management - Admin");
         else if (accountType.equals("employee"))
@@ -75,7 +75,7 @@ public class AccountManagementController {
 
         this.dotPointOne.setText("Add new account");
         this.dotPointOne.setOnMouseClicked(event -> {
-            this.singleton.setAccountManagementDetails("addAccount", "updateOrAdd");
+            this.singleton.setAccountManagementDetails("addAccount", "accountAction");
             try {
                 this.singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
             } catch (IOException e) {
@@ -85,7 +85,7 @@ public class AccountManagementController {
 
         this.dotPointTwo.setText("Update account details");
         this.dotPointTwo.setOnMouseClicked(event -> {
-            this.singleton.setAccountManagementDetails("updateAccount", "updateOrAdd");
+            this.singleton.setAccountManagementDetails("updateAccount", "accountAction");
             try {
                 this.singleton.changeScene("main/ui/admin/selectUser.fxml");
             } catch (IOException e) {
@@ -95,7 +95,7 @@ public class AccountManagementController {
 
         this.dotPointThree.setText("Delete account");
         this.dotPointThree.setOnMouseClicked(event -> {
-            this.singleton.setAccountManagementDetails("deleteAccount", "updateOrAdd");
+            this.singleton.setAccountManagementDetails("deleteAccount", "accountAction");
             try {
                 this.singleton.changeScene("main/ui/admin/selectUser.fxml");
             } catch (IOException e) {

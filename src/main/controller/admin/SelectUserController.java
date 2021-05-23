@@ -22,10 +22,13 @@ public class SelectUserController {
     private Text subHeader;
 
     @FXML
+    private Text errorText;
+
+    @FXML
     private void initialize() {
-        if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("updateAccount"))
+        if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
             this.subHeader.setText("Choose account to update");
-        else if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("deleteAccount"))
+        else if (this.singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
             this.subHeader.setText("Choose account to delete");
     }
 
@@ -34,11 +37,14 @@ public class SelectUserController {
         String response = searchUser();
         if (response.equals("found")) {
             this.singleton.setAccountManagementDetails(String.valueOf(this.employeeIDField.getText().trim()), "employeeID");
-            if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("updateAccount"))
+            if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
                 this.singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
-            else if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("deleteAccount"))
+            else if (this.singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
                 this.singleton.changeScene("main/ui/admin/deleteUser.fxml");
         }
+        else
+            this.errorText.setText(response);
+
     }
 
 

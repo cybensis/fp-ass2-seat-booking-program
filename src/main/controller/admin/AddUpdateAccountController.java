@@ -74,7 +74,7 @@ public class AddUpdateAccountController {
             this.accountType = 1;
         }
 
-        if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("updateAccount")) {
+        if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount")) {
             this.subHeader.setText("Update " + this.singleton.getAccountManagementDetails("accountType") + " account");
             this.updatingAccountDetails = this.registerModel.retrieveUserDetails(this.singleton.getAccountManagementDetails("employeeID"), this.singleton.getAccountManagementDetails("accountType"));
             if (!this.updatingAccountDetails[0].equals("Error")) {
@@ -88,7 +88,7 @@ public class AddUpdateAccountController {
                 this.username.setText(this.updatingAccountDetails[6]);
                 this.role.setText(this.updatingAccountDetails[7]);
             }
-        } else if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("addAccount")) {
+        } else if (this.singleton.getAccountManagementDetails("accountAction").equals("addAccount")) {
             this.subHeader.setText("Add new " + this.singleton.getAccountManagementDetails("accountType") + " account");
         }
     }
@@ -101,9 +101,9 @@ public class AddUpdateAccountController {
     @FXML
     private void submit(MouseEvent event) throws SQLException {
         String response = "";
-        if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("addAccount"))
+        if (this.singleton.getAccountManagementDetails("accountAction").equals("addAccount"))
             response = addNewUser();
-        else if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("updateAccount")) {
+        else if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount")) {
             response = updateUser();
         }
 
@@ -111,7 +111,7 @@ public class AddUpdateAccountController {
             //Do something that says success, popup maybe
             this.singleton.setAccountManagementDetails("", "employeeID");
             this.singleton.setAccountManagementDetails("", "accountType");
-            this.singleton.setAccountManagementDetails("", "updateOrAdd");
+            this.singleton.setAccountManagementDetails("", "accountAction");
 
             // RESET ALL RELATED SINGLETON VARIABLES
             Node source = (Node) event.getSource();

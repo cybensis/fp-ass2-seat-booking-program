@@ -15,12 +15,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main/ui/admin/adminHome.fxml"));
         singleton.setMainStage(primaryStage);
         Scene scene = new Scene(root);
         primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
+        String test[] = test();
+        System.out.println(test==null);
+    }
+
+    public String[] test() {
+        return null;
     }
 
 

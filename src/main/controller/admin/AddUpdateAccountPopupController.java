@@ -18,9 +18,9 @@ public class AddUpdateAccountPopupController {
 
     @FXML
     private void initialize() {
-        if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("updateAccount"))
+        if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
             this.mainHeader.setText("This account has successfully been updated");
-        else if (this.singleton.getAccountManagementDetails("updateOrAdd").equals("addAccount"))
+        else if (this.singleton.getAccountManagementDetails("accountAction").equals("addAccount"))
             this.mainHeader.setText("This account has successfully been added");
     }
     @FXML
