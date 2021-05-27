@@ -41,7 +41,7 @@
                   <Image url="@../img/backButton.png" />
                </image>
             </ImageView>
-            <Label fx:id="isConnected" layoutX="8.0" layoutY="903.0" prefHeight="54.0" prefWidth="652.0" text="Status" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="622.0" AnchorPane.topAnchor="903.0">
+            <Label fx:id="errorMessage" layoutX="8.0" layoutY="903.0" prefHeight="54.0" prefWidth="652.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="622.0" AnchorPane.topAnchor="903.0">
                <font>
                   <Font size="23.0" />
                </font>

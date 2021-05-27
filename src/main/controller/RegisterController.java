@@ -52,6 +52,10 @@ public class RegisterController {
         private Button submitButton;
 
         @FXML
+        private Label errorMessage;
+
+
+        @FXML
         public void submit(ActionEvent event) throws SQLException {
                 int employeeID;
 
@@ -61,6 +65,9 @@ public class RegisterController {
                         if (registerFieldData[i].length() == 0)
                                 System.out.println("error");
                                 // Just have a general error saying, Please make sure you fill in all your fields loser.
+                        if (registerFieldData[i].contains(",")){
+                                //return error, the way this data is added into CSV reports, this comma would cause problems.
+                        }
                 }
                 try {
                         employeeID = Integer.parseInt(this.employeeid.getText());

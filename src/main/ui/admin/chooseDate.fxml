@@ -10,38 +10,38 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.admin.ChooseDateController">
-    <children>
-        <Text layoutX="230.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin panel" wrappingWidth="451.099853515625" AnchorPane.bottomAnchor="525.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="599.0" AnchorPane.topAnchor="41.0">
-            <font>
-                <Font name="SansSerif Bold" size="67.0" />
-            </font>
-        </Text>
-        <Line endX="509.0355224609375" endY="4.57763671875E-5" layoutX="533.0" layoutY="120.0" startX="-300.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" AnchorPane.leftAnchor="229.85586547851562" AnchorPane.rightAnchor="235.46444702148438" />
-        <Text fx:id="subHeader" layoutX="238.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="subHeader" wrappingWidth="384.9154357910156">
-            <font>
-                <Font size="29.0" />
-            </font>
-        </Text>
-        <ImageView fx:id="backButton" fitHeight="76.0" fitWidth="83.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#goBack" preserveRatio="true">
-            <image>
-                <Image url="@../../img/backButton.png" />
-            </image>
-        </ImageView>
-      <DatePicker fx:id="dateField" layoutX="243.0" layoutY="290.0" prefHeight="54.0" prefWidth="467.0" />
-      <Text layoutX="243.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What day would you like to look at?" wrappingWidth="434.9154357910156">
+   <children>
+      <Text layoutX="240.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin panel" wrappingWidth="451.099853515625">
+         <font>
+            <Font name="SansSerif Bold" size="67.0" />
+         </font>
+      </Text>
+      <Line endX="509.0355224609375" endY="4.57763671875E-5" layoutX="543.0" layoutY="130.0" startX="-300.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" />
+      <Text fx:id="subHeader" layoutX="248.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change COVID seating status" wrappingWidth="384.9154357910156">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="backButton" fitHeight="76.0" fitWidth="83.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#goBack" preserveRatio="true">
+         <image>
+            <Image url="@../../img/backButton.png" />
+         </image>
+      </ImageView>
+      <DatePicker fx:id="dateField" layoutX="253.0" layoutY="299.0" prefHeight="54.0" prefWidth="467.0" />
+      <Text fx:id="dateText" layoutX="248.0" layoutY="284.8193359375" strokeType="OUTSIDE" strokeWidth="0.0" text="What day would you like to change?" wrappingWidth="746.9154357910156">
          <font>
             <Font size="23.0" />
          </font>
       </Text>
-      <Button fx:id="proceed" layoutX="577.0" layoutY="445.0" mnemonicParsing="false" onMouseClicked="#proceed" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Continue" textFill="WHITE">
+      <Button fx:id="proceed" layoutX="253.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#proceed" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Continue" textFill="WHITE">
          <font>
             <Font name="SansSerif Bold" size="17.0" />
          </font>
       </Button>
-      <Text fx:id="errorMessage" fill="#e40000" layoutX="243.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error: You already have a booking this day" visible="false" wrappingWidth="434.9154357910156">
+      <Text fx:id="errorMessage" fill="#e40000" layoutX="253.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error: You cannot change a past date" visible="false" wrappingWidth="434.9154357910156">
          <font>
             <Font size="23.0" />
          </font>
       </Text>
-    </children>
+   </children>
 </AnchorPane>

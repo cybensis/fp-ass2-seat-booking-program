@@ -7,20 +7,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Singleton;
 import main.model.user.CreateBookingModel;
+import main.model.user.ManageBookingsModel;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CreateBookingPopupController {
+public class ManageBookingsPopupController {
 
-    private CreateBookingModel createBookingModel = new CreateBookingModel();
+    private ManageBookingsModel manageBookingsModel = new ManageBookingsModel();
     private Singleton singleton = Singleton.getInstance();
     private boolean submittedAlready = false;
-
-    @FXML
-    private Text popupText;
 
     @FXML
     private Button accept;
@@ -32,33 +28,27 @@ public class CreateBookingPopupController {
     private Text homepageNav;
 
     @FXML
-    private void acceptBooking(MouseEvent event) throws SQLException {
-        if (!submittedAlready) {
-            if (singleton.getUpdateBooking()) {
-                createBookingModel.updateBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
-                singleton.setUpdateBooking(false);
-            }
-            else
-                createBookingModel.addBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
+    private Text header;
 
-            accept.setVisible(false);
-            cancel.setVisible(false);
-            popupText.setText("Your request has been sent to an admin");
-            homepageNav.setVisible(true);
+    @FXML
+    private void removeBooking(MouseEvent event) throws IOException, SQLException {
+        if (!submittedAlready) {
             submittedAlready = true;
-            singleton.setChosenDesk(-1);
-            singleton.setDate(null);
+            this.header.setText("Your booking has been deleted");
+            this.cancel.setVisible(false);
+            this.accept.setVisible(false);
+            this.homepageNav.setVisible(true);
+            manageBookingsModel.removeBooking(singleton.getUser(), singleton.getDate());
         }
 
     }
 
     @FXML
-    private void cancelBooking(MouseEvent event) {
+    private void cancelRemove(MouseEvent event) {
         Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
 
     }
-
 
     @FXML
     private void goHome(MouseEvent event) throws IOException {
@@ -66,8 +56,9 @@ public class CreateBookingPopupController {
         Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
         singleton.changeScene("main/ui/user/userHome.fxml");
-
     }
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package main.model;
 
 import main.SQLConnection;
+import main.Singleton;
 import org.sqlite.SQLiteConnection;
 
 import java.sql.Connection;
@@ -11,19 +12,11 @@ import main.BCrypt;
 
 public class LoginModel {
 
-    Connection connection;
-
-    public LoginModel(){
-
-        connection = SQLConnection.connect();
-        if (connection == null)
-            System.exit(1);
-
-    }
+    private Singleton singleton = Singleton.getInstance();
 
     public Boolean isDbConnected(){
         try {
-            return !connection.isClosed();
+            return !singleton.getConnection().isClosed();
         }
         catch(Exception e){
             return false;
@@ -33,17 +26,16 @@ public class LoginModel {
     public String isLogin(String user, String pass) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
-        String query = "SELECT user.password, accountTypes.accountType FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.username = ?";
+        String query = "SELECT user.password, accountTypes.accountType, user.username FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.username = ?";
         try {
 
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, user);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String storedHash = resultSet.getString("password");
-                System.out.println(BCrypt.checkpw(pass, storedHash));
                 if (BCrypt.checkpw(pass, storedHash)) {
-                    System.out.println("test");
+                    singleton.setUser(resultSet.getString("username"));
                     return resultSet.getString("accountType");
                 }
                 return "false";

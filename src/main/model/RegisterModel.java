@@ -1,26 +1,20 @@
 package main.model;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import main.BCrypt;
 import main.SQLConnection;
+import main.Singleton;
 
 import java.sql.*;
 
 public class RegisterModel {
     //Holds the amount of different input fields that are required for an account.
     private static final int ACCOUNT_FIELDS = 8;
-    Connection connection;
-
-    public RegisterModel(){
-
-        connection = SQLConnection.connect();
-        if (connection == null)
-            System.exit(1);
-
-    }
+    private Singleton singleton = Singleton.getInstance();
 
     public Boolean isDbConnected(){
         try {
-            return !connection.isClosed();
+            return !singleton.getConnection().isClosed();
         }
         catch(Exception e){
             return false;
@@ -40,7 +34,7 @@ public class RegisterModel {
                     preparedStatement = null;
                     resultSet = null;
                     String insertQuery = "INSERT INTO user (firstName,lastName,password,employeeID,secretQuestion,secretQuestionAnswer,username,employeeRole, accountType) VALUES (?,?,?,?,?,?,?,?,?)";
-                    preparedStatement = connection.prepareStatement(insertQuery);
+                    preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
                     preparedStatement.setString(1, firstName);
                     preparedStatement.setString(2, surname);
                     preparedStatement.setString(3, hashedPassword);
@@ -72,7 +66,7 @@ public class RegisterModel {
         ResultSet resultSet=null;
         String query = "SELECT * FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.employeeID = ? AND accountTypes.accountType = ?";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, employeeID);
             preparedStatement.setString(2, accountType);
             resultSet = preparedStatement.executeQuery();
@@ -114,7 +108,7 @@ public class RegisterModel {
                 preparedStatement = null;
                 resultSet = null;
                 String insertQuery = "UPDATE user SET firstName = ?,lastName = ?,password = ?,employeeID = ?,secretQuestion = ?,secretQuestionAnswer = ?, username = ?,employeeRole = ? WHERE employeeID = ?";
-                preparedStatement = connection.prepareStatement(insertQuery);
+                preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, surname);
                 preparedStatement.setString(3, password);
@@ -151,7 +145,7 @@ public class RegisterModel {
         ResultSet resultSet=null;
         String query = "SELECT employeeID FROM user WHERE employeeID = ?";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, employeeID);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -170,7 +164,7 @@ public class RegisterModel {
         ResultSet resultSet=null;
         String query = "SELECT username FROM user WHERE username = ?";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

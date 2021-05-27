@@ -2,22 +2,27 @@ package main.controller.user;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import main.Singleton;
-import main.model.user.ChooseDateModel;
+import main.model.user.ManageBookingsModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class ChooseDateController {
     private Singleton singleton = Singleton.getInstance();
-    private ChooseDateModel chooseDateModel = new ChooseDateModel();
+    private ManageBookingsModel manageBookingsModel = new ManageBookingsModel();
+
 
     @FXML
-    private Label isConnected;
+    private Text subHeader;
+
+    @FXML
+    private Text dateText;
 
     @FXML
     private Text newBooking;
@@ -36,20 +41,51 @@ public class ChooseDateController {
 
     @FXML
     private void goBack(MouseEvent event) throws IOException {
-        singleton.changeScene("main/ui/user/userHome.fxml");
+        if (singleton.getUpdateBooking()) {
+            singleton.setUpdateBooking(false);
+            singleton.changeScene("main/ui/user/manageBookings.fxml");
+            singleton.setDate(null);
+        } else
+            singleton.changeScene("main/ui/user/userHome.fxml");
+
     }
 
+    @FXML
+    private void initialize() {
+        if (singleton.getUpdateBooking()) {
+            subHeader.setText("Update booking");
+            dateText.setText("Choose a new date for you booking");
+        }
+    }
 
     @FXML
-    void proceed(MouseEvent event) throws IOException, SQLException {
-        String response = chooseDateModel.alreadyBooked(dateField.getValue(), singleton.getUser());
-        if (response.equals("alreadyBooked"))
+    private void proceed(MouseEvent event) throws IOException, SQLException {
+        if (!singleton.getUpdateBooking() && ChronoUnit.DAYS.between(LocalDate.now(), dateField.getValue()) < 2) {
+            errorMessage.setText("Error: Your booking must be at least 2 days from now");
             errorMessage.setVisible(true);
-        else {
+            return;
+        }
+        String response = manageBookingsModel.alreadyBooked(dateField.getValue(), singleton.getUser());
+        if (response.equals("alreadyBooked") && !singleton.getUpdateBooking()) {
+            errorMessage.setText("Error: You already have a booking on this day");
+            errorMessage.setVisible(true);
+            return;
+        }
+        if (singleton.getUpdateBooking()) {
+            System.out.println(ChronoUnit.DAYS.between(singleton.getDate(), dateField.getValue()));
+            if (ChronoUnit.DAYS.between(singleton.getDate(), dateField.getValue()) < 2) {
+                errorMessage.setText("Error: New date must be at least 2 days from today");
+                errorMessage.setVisible(true);
+            }
+            else {
+                manageBookingsModel.updateBooking(singleton.getUser(), singleton.getDate(), dateField.getValue());
+                singleton.setDate(null);
+                singleton.changeScene("main/ui/user/manageBookings.fxml");
+            }
+        } else {
             singleton.setDate(dateField.getValue());
             singleton.changeScene("main/ui/user/createBooking.fxml");
         }
 
     }
-
 }

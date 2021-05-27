@@ -54,11 +54,8 @@ public class LoginController implements Initializable {
         try {
             //atemptLogin is set to either false, meaning the login failed, or is set to the users account type
             String attemptLogin = loginModel.isLogin(txtUsername.getText().trim(),txtPassword.getText().trim());
-            System.out.println(attemptLogin);
             if (!attemptLogin.equals("false")){
-                System.out.println("test");
-                singleton.setUser(attemptLogin);
-                if (attemptLogin.equals("basic"))
+                if (attemptLogin.equals("employee"))
                     singleton.changeScene("main/ui/user/userHome.fxml");
                 else if (attemptLogin.equals("admin"))
                     singleton.changeScene("main/ui/admin/adminHome.fxml");

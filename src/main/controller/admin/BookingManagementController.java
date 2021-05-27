@@ -35,13 +35,14 @@ public class BookingManagementController {
 
 
     @FXML
-    private void goBack(MouseEvent event) {
-
+    private void goBack(MouseEvent event) throws IOException {
+        singleton.changeScene("main/ui/admin/adminHome.fxml");
     }
 
     @FXML
     private void manageBookings(MouseEvent event) throws IOException {
         this.singleton.setViewBookingsType("existingBookings");
+        this.singleton.changeScene("main/ui/admin/viewBookings.fxml");
     }
 
     @FXML
@@ -51,7 +52,9 @@ public class BookingManagementController {
     }
 
     @FXML
-    private void seatingStatus(MouseEvent event) {
+    private void seatingStatus(MouseEvent event) throws IOException {
+        this.singleton.setAdminDateType("seatingStatus");
+        this.singleton.changeScene("main/ui/admin/chooseDate.fxml");
 
     }
 

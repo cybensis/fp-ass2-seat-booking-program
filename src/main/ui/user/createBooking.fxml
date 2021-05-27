@@ -73,7 +73,7 @@
                   <Font name="Nirmala UI Semilight" size="22.0" />
                </font>
             </Text>
-            <Text layoutX="736.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This seat is boocked or blocked" wrappingWidth="372.9154357910156">
+            <Text layoutX="736.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This seat is booked or blocked" wrappingWidth="372.9154357910156">
                <font>
                   <Font name="Nirmala UI Semilight" size="22.0" />
                </font>

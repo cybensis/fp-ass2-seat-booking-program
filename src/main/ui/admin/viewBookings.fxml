@@ -29,7 +29,7 @@
                 <Image url="@../../img/backButton.png" />
             </image>
         </ImageView>
-      <Button fx:id="acceptButton" layoutX="874.0" layoutY="591.0" mnemonicParsing="false" onMouseClicked="#acceptButton" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Accept" textFill="WHITE">
+      <Button fx:id="acceptButton" layoutX="874.0" layoutY="591.0" mnemonicParsing="false" onMouseClicked="#acceptButton" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Accept" textFill="WHITE" visible="false">
          <font>
             <Font name="SansSerif Bold" size="17.0" />
          </font>
@@ -39,7 +39,7 @@
             <Font size="23.0" />
          </font>
       </Text>
-      <ScrollPane hbarPolicy="NEVER" layoutX="274.0" layoutY="204.0" prefHeight="313.0" prefWidth="733.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="274.0" layoutY="204.0" prefHeight="313.0" prefWidth="733.0" vbarPolicy="ALWAYS">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="732.0">
                <children>
@@ -55,7 +55,7 @@
             </AnchorPane>
         </content>
       </ScrollPane>
-      <Button fx:id="rejectButton" layoutX="703.0" layoutY="591.0" mnemonicParsing="false" onMouseClicked="#rejectEntry" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Reject" textFill="WHITE">
+      <Button fx:id="rejectButton" layoutX="703.0" layoutY="591.0" mnemonicParsing="false" onMouseClicked="#removeEntry" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Reject" textFill="WHITE" visible="false">
          <font>
             <Font name="SansSerif Bold" size="17.0" />
          </font>

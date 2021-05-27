@@ -8,18 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import main.BCrypt;
+import main.Singleton;
 
 public class ResetPasswordModel {
 
-    Connection connection;
-
-    public ResetPasswordModel(){
-
-        connection = SQLConnection.connect();
-        if (connection == null)
-            System.exit(1);
-
-    }
+    private Singleton singleton = Singleton.getInstance();
 
 
     public String changePassword(String username, String password) throws SQLException {
@@ -29,7 +22,7 @@ public class ResetPasswordModel {
         System.out.println(password);
         String passwordHash = BCrypt.hashpw(password,BCrypt.gensalt());
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, passwordHash);
             preparedStatement.setString(2, username);
             int response = preparedStatement.executeUpdate();
@@ -50,7 +43,7 @@ public class ResetPasswordModel {
         String query = "SELECT secretQuestion,secretQuestionAnswer FROM user WHERE username = ?";
         String secretQuestion[] = new String[2];
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

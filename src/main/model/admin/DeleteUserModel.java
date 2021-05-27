@@ -1,6 +1,7 @@
 package main.model.admin;
 
 import main.SQLConnection;
+import main.Singleton;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,22 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DeleteUserModel {
-    private Connection connection;
-
-    public DeleteUserModel(){
-
-        connection = SQLConnection.connect();
-        if (connection == null)
-            System.exit(1);
-
-    }
+    private Singleton singleton = Singleton.getInstance();
     public String[] returnUserDetails(String employeeID) throws SQLException {
         PreparedStatement preparedStatement = null;
         String accountDetails[];
         ResultSet resultSet=null;
         String query = "SELECT firstName, lastName, username FROM user WHERE employeeID = ?";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, employeeID);
             resultSet = preparedStatement.executeQuery();
             // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
@@ -46,7 +39,7 @@ public class DeleteUserModel {
         ResultSet resultSet=null;
         String query = "DELETE FROM user WHERE employeeID = ?";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, employeeID);
             preparedStatement.executeUpdate();
             return "success";

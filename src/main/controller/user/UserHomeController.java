@@ -31,7 +31,7 @@ public class UserHomeController {
 
     @FXML
     void manageBookingNav(MouseEvent event) throws IOException {
-        singleton.changeScene("main/ui/user/chooseDate.fxml");
+        singleton.changeScene("main/ui/user/manageBookings.fxml");
     }
 
     @FXML

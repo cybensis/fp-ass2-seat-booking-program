@@ -9,23 +9,27 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Singleton {
+    private Connection connection = SQLConnection.connect();
+
     // Holds the username of the logged in user
     private String currentUser;
 
     // Holds the date selected by the user, used in various parts of the application
-    private LocalDate userChosenDate;
+    private LocalDate chosenDate;
 
     // viewBoookings.fxml is used for both viewing existing bookings, and viewing booking requests, this variable
     // defines which one is being used.
     private String viewBookingsType;
 
-    // Holds the date selected by an admin, in the admin panel
-    private LocalDate adminChosenDate;
+    // Since chooseDate.fxml is used in three scenes, this differentiates between them.
+    private String adminDateType = "";
 
     // Holds the id of the desk chosen by the user
     private int chosenDeskID;
@@ -54,6 +58,7 @@ public class Singleton {
         sceneTitle.put("main/ui/login.fxml", "Login");
         sceneTitle.put("main/ui/register.fxml", "Register");
         sceneTitle.put("main/ui/user/userHome.fxml", "User panel");
+        sceneTitle.put("main/ui/user/manageBookings.fxml", "User panel - Manage bookings");
         sceneTitle.put("main/ui/user/createBooking.fxml", "User panel - Create booking");
         sceneTitle.put("main/ui/user/chooseDate.fxml", "User panel - Create booking");
         sceneTitle.put("main/ui/user/createBookingPopup.fxml", "Book this seat?");
@@ -61,6 +66,13 @@ public class Singleton {
         sceneTitle.put("main/ui/admin/adminHome.fxml", "Admin panel");
         sceneTitle.put("main/ui/admin/accountManagement.fxml", "Admin panel - Account management");
         sceneTitle.put("main/ui/admin/addUpdateAccount.fxml", "Admin panel - Account management");
+        sceneTitle.put("main/ui/admin/graphicVisualisation.fxml", "Admin panel - Graphic visualisation");
+        sceneTitle.put("main/ui/admin/bookingManagement.fxml", "Admin panel - Booking management");
+        sceneTitle.put("main/ui/admin/chooseDate.fxml", "Admin panel - Choose date");
+        sceneTitle.put("main/ui/admin/deleteUser.fxml", "Admin panel - Account management");
+        sceneTitle.put("main/ui/admin/seatingStatus.fxml", "Admin panel - Booking management");
+        sceneTitle.put("main/ui/admin/selectUser.fxml", "Admin panel - Account management");
+        sceneTitle.put("main/ui/admin/viewBookings.fxml", "Admin panel - Booking management");
         accountManagementDetails.put("employeeID", "");
         accountManagementDetails.put("accountType", "");
         accountManagementDetails.put("accountAction", "");
@@ -74,23 +86,23 @@ public class Singleton {
     public void setUser(String username) { this.currentUser = username; }
     public String getUser() { return this.currentUser; }
 
-    public void setDate(LocalDate chosenDate) { this.userChosenDate = chosenDate;}
-    public LocalDate getDate() { return this.userChosenDate; }
+    public void setDate(LocalDate chosenDate) { this.chosenDate = chosenDate;}
+    public LocalDate getDate() { return this.chosenDate; }
 
-    public void changeScene(String filePath, MouseEvent event) throws IOException {
-        Node source = (Node) event.getSource();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(filePath));
-        Stage window = (Stage) source.getScene().getWindow();
-        window.setTitle(sceneTitle.get(filePath));
-        window.setScene(new Scene(root));
-        window.show();
-    }
 
     public void changeScene(String filePath) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(filePath));
+        try {
+            this.connection.close();
+            if (connection == null)
+                System.exit(1);
+        }
+        catch (SQLException error) {}
         this.mainStage.setTitle(sceneTitle.get(filePath));
         this.mainStage.setScene(new Scene(root));
         this.mainStage.show();
+        this.connection = SQLConnection.connect();
+
     }
 
     public void setChosenDesk(int seatID) { this.chosenDeskID = seatID;}
@@ -106,9 +118,17 @@ public class Singleton {
     public void setAccountManagementDetails(String newDetails, String index) { this.accountManagementDetails.put(index, newDetails);};
     public String getAccountManagementDetails(String index) {return this.accountManagementDetails.get(index);};
 
-    public void setAdminDate(LocalDate chosenDate) { this.adminChosenDate = chosenDate;}
-    public LocalDate getAdminDate() { return this.adminChosenDate; }
-
     public void setViewBookingsType(String viewBookingType) { this.viewBookingsType = viewBookingType; }
     public String getViewBookingsType() { return this.viewBookingsType; }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setAdminDateType(String dateType) {
+        this.adminDateType = dateType;
+    }
+    public String getAdminDateType() {
+        return adminDateType;
+    }
 }

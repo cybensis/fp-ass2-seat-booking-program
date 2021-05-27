@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import main.Singleton;
-import main.controller.BookingTableRow;
 import main.model.admin.ViewBookingsModel;
 
 import java.io.IOException;
@@ -57,6 +56,9 @@ public class ViewBookingsController {
 
     @FXML
     private void initialize() throws SQLException {
+        // Maybe a good idea to retrieve all submissions, past and present, and anything less than 2 days from now
+        // should be deleted.
+        BookingTableRow bookingTableRows[];
         this.employeeIDColumn.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
         this.nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         this.deskIDColumn.setCellValueFactory(new PropertyValueFactory<>("deskID"));
@@ -68,25 +70,26 @@ public class ViewBookingsController {
         });
         if (this.singleton.getViewBookingsType().equals("existingBookings")) {
             this.subHeader.setText("View existing bookings");
+            bookingTableRows = this.viewBookingsModel.getBookings("active");
         }
         else {
             this.subHeader.setText("View booking requests");
-            BookingTableRow bookingTableRows[] = this.viewBookingsModel.getBookingRequests();
-            if (bookingTableRows != null) {
-                for (int i = 0; i < bookingTableRows.length; i++) {
-                    this.bookingTable.getItems().add(bookingTableRows[i]);
+           bookingTableRows = this.viewBookingsModel.getBookings("review");
+        }
+        if (bookingTableRows != null) {
+            for (int i = 0; i < bookingTableRows.length; i++) {
+                this.bookingTable.getItems().add(bookingTableRows[i]);
 
-                }
-            }
-            else {
-                //Set no bookings
             }
         }
     }
 
     @FXML
     private void acceptButton(MouseEvent event) throws SQLException {
-        System.out.println(this.viewBookingsModel.acceptBooking(String.valueOf(this.selectedRow.getEmployeeID()), this.selectedRow.getDate()));
+        if (this.selectedRow != null) {
+            this.viewBookingsModel.acceptBooking(String.valueOf(this.selectedRow.getEmployeeID()), this.selectedRow.getDate());
+            this.bookingTable.getItems().remove(this.selectedRow);
+        }
     }
 
     @FXML
@@ -95,13 +98,11 @@ public class ViewBookingsController {
     }
 
     @FXML
-    private void rejectEntry(MouseEvent event) throws SQLException {
-        this.viewBookingsModel.removeBooking(String.valueOf(this.selectedRow.getEmployeeID()), this.selectedRow.getDate());
-    }
-
-    @FXML
-    private void removeEntry(MouseEvent event) {
-
+    private void removeEntry(MouseEvent event) throws SQLException {
+        if (this.selectedRow != null) {
+            this.viewBookingsModel.removeBooking(String.valueOf(this.selectedRow.getEmployeeID()), this.selectedRow.getDate());
+            this.bookingTable.getItems().remove(this.selectedRow);
+        }
     }
 
     @FXML
@@ -115,10 +116,15 @@ public class ViewBookingsController {
             this.selectedRow = null;
             return;
         }
-        this.acceptButton.setVisible(true);
-        this.rejectButton.setVisible(true);
+        if (this.singleton.getViewBookingsType().equals("existingBookings")) {
+            acceptButton.setVisible(false);
+            rejectButton.setVisible(false);
+            removeButton.setVisible(true);
+        }
+        else {
+            this.acceptButton.setVisible(true);
+            this.rejectButton.setVisible(true);
+        }
         this.selectedRow = this.bookingTable.getSelectionModel().getSelectedItem();
-
-
     }
 }
