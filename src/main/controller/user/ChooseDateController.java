@@ -66,7 +66,7 @@ public class ChooseDateController {
             errorMessage.setVisible(true);
             return;
         }
-        String response = manageBookingsModel.alreadyBooked(dateField.getValue(), singleton.getUser());
+        String response = manageBookingsModel.alreadyBooked(dateField.getValue());
         if (response.equals("alreadyBooked") && !singleton.getUpdateBooking()) {
             errorMessage.setText("Error: You already have a booking on this day");
             errorMessage.setVisible(true);

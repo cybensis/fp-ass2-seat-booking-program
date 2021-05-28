@@ -11,14 +11,6 @@ public class RegisterModel {
     private static final int ACCOUNT_FIELDS = 8;
     private Singleton singleton = Singleton.getInstance();
 
-    public Boolean isDbConnected(){
-        try {
-            return !singleton.getConnection().isClosed();
-        }
-        catch(Exception e){
-            return false;
-        }
-    }
 
     public String attemptRegister(Employee newEmployee) throws SQLException {
         PreparedStatement preparedStatement = null;
@@ -43,7 +35,7 @@ public class RegisterModel {
                     preparedStatement.setString(7, newEmployee.getUsername());
                     preparedStatement.setString(8, newEmployee.getRole());
                     preparedStatement.setInt(9, newEmployee.getAccountTypeID());
-                    int response = preparedStatement.executeUpdate();
+                    preparedStatement.executeUpdate();
                     return "Success";
                 }
                 catch (Exception e)
@@ -117,7 +109,7 @@ public class RegisterModel {
                 preparedStatement.setString(7, newEmployee.getUsername());
                 preparedStatement.setString(8, newEmployee.getRole());
                 preparedStatement.setInt(9, originalID);
-                int response = preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
                 return "Success";
             }
             catch (Exception e)

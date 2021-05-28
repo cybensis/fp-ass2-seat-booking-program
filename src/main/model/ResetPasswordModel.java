@@ -1,13 +1,9 @@
 package main.model;
 
 import main.BCrypt;
-import main.SQLConnection;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import main.BCrypt;
 import main.Singleton;
 
 public class ResetPasswordModel {
@@ -15,15 +11,14 @@ public class ResetPasswordModel {
     private Singleton singleton = Singleton.getInstance();
 
 
-    public String changePassword(String username, String password) throws SQLException {
+    public String changePassword(String password) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String query = "UPDATE user SET password = ? WHERE username = ?";
-        System.out.println(password);
+        String query = "UPDATE user SET password = ? WHERE employeeID = ?";
         String passwordHash = BCrypt.hashpw(password,BCrypt.gensalt());
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, passwordHash);
-            preparedStatement.setString(2, username);
+            preparedStatement.setInt(2, singleton.getUser());
             int response = preparedStatement.executeUpdate();
             return "Success";
         } catch (Exception e) {

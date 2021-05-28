@@ -5,12 +5,11 @@ import main.Singleton;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class DownloadReportModel {
     private Singleton singleton = Singleton.getInstance();
 
-    public String[] getBookingData(LocalDate chosenDate) throws SQLException {
+    public String[] getBookingData() throws SQLException {
         PreparedStatement preparedStatement = null;
         // Naming this rs to make the array assignment shorter and more readable.
         ResultSet rs=null;
@@ -18,12 +17,12 @@ public class DownloadReportModel {
         String query = "SELECT count(*) FROM userBookings WHERE date >= ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, String.valueOf(chosenDate));
+            preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             rs = preparedStatement.executeQuery();
             bookingData = new String[rs.getInt("count(*)")];
             query = "SELECT * FROM userBookings WHERE date >= ?";
             preparedStatement = singleton.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, String.valueOf(chosenDate));
+            preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             rs = preparedStatement.executeQuery();
             int i = 0;
             while (rs.next()) {

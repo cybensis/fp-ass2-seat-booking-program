@@ -124,7 +124,11 @@ public class ManageBookingsController {
 
     @FXML
     private void initialize() throws SQLException {
-        ManageBookingTableRow userBookings[] = manageBookingsModel.getUserBookings(singleton.getUser());
+        if (!singleton.getHasClearedBookings()) {
+            manageBookingsModel.deleteOldEntries();
+            singleton.setHasClearedBookings(true);
+        }
+        ManageBookingTableRow userBookings[] = manageBookingsModel.getUserBookings();
         deskIDColumn.setCellValueFactory(new PropertyValueFactory<>("deskID"));
         stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));

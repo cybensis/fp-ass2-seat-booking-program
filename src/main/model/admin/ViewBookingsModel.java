@@ -37,7 +37,10 @@ public class ViewBookingsModel {
                 return bookingTableRow;
             }
             else
-                return null;
+                return new BookingTableRow[]{null};
+            // In ViewBookingsController, I check if this function returns null to check for errors, but having not
+            // booking requests would also be null, but having a null array element is very different to having a
+            // null array, so I use this to distinguish between an error and no booking requests.
         }
         catch (Exception e)
         {
@@ -50,15 +53,14 @@ public class ViewBookingsModel {
         }
     }
 
-    public String acceptBooking(String employeeID, String date) throws SQLException {
+    public String acceptBooking() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
-
         String query = "UPDATE userBookings SET state = 'active' WHERE date = ? AND employeeID = ? AND state = 'review'";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, date);
-            preparedStatement.setString(2, employeeID);
+            preparedStatement.setString(1, String.valueOf(singleton.getDate()));
+            preparedStatement.setInt(2, singleton.getUser());
             preparedStatement.executeUpdate();
             return "success";
         }
@@ -73,14 +75,14 @@ public class ViewBookingsModel {
         }
     }
 
-    public String removeBooking(String employeeID, String date) throws SQLException {
+    public String removeBooking() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
         String query = "DELETE FROM userBookings WHERE employeeID = ? AND date = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, employeeID);
-            preparedStatement.setString(2, date);
+            preparedStatement.setInt(1, singleton.getUser());
+            preparedStatement.setString(2, String.valueOf(singleton.getDate()));
             preparedStatement.executeUpdate();
             return "success";
         }

@@ -1,10 +1,6 @@
 package main.model;
 
-import main.SQLConnection;
 import main.Singleton;
-import org.sqlite.SQLiteConnection;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +22,7 @@ public class LoginModel {
     public String isLogin(String user, String pass) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
-        String query = "SELECT user.password, accountTypes.accountType, user.username FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.username = ?";
+        String query = "SELECT user.password, accountTypes.accountType, user.employeeID FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.username = ?";
         try {
 
             preparedStatement = singleton.getConnection().prepareStatement(query);
@@ -35,7 +31,7 @@ public class LoginModel {
             if (resultSet.next()) {
                 String storedHash = resultSet.getString("password");
                 if (BCrypt.checkpw(pass, storedHash)) {
-                    singleton.setUser(resultSet.getString("username"));
+                    singleton.setUser(resultSet.getInt("employeeID"));
                     return resultSet.getString("accountType");
                 }
                 return "false";

@@ -2,10 +2,8 @@ package main;
 
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,8 +16,14 @@ import java.util.Map;
 public class Singleton {
     private Connection connection = SQLConnection.connect();
 
-    // Holds the username of the logged in user
-    private String currentUser;
+    // Holds the employeeID of the logged in user
+    private int currentUser;
+
+    // When a user logs on and visits the manageBookings page, it will delete any bookings that have a date, less than
+    // tomorrow (since this is a requirement), and where the state = 'review' (since the admins might want to keep the
+    // actual accepted bookings in the database, even if they're old), but I only want this to run once everytime the
+    // user logs in, not everytime they visit manageBookings, so I use this to prevent multiple pointless deletes.
+    private boolean hasClearedBookings = false;
 
     // Holds the date selected by the user, used in various parts of the application
     private LocalDate chosenDate;
@@ -83,8 +87,8 @@ public class Singleton {
         return SINGLETON;
     }
 
-    public void setUser(String username) { this.currentUser = username; }
-    public String getUser() { return this.currentUser; }
+    public void setUser(int employeeID) { this.currentUser = employeeID; }
+    public int getUser() { return this.currentUser; }
 
     public void setDate(LocalDate chosenDate) { this.chosenDate = chosenDate;}
     public LocalDate getDate() { return this.chosenDate; }
@@ -131,4 +135,7 @@ public class Singleton {
     public String getAdminDateType() {
         return adminDateType;
     }
+
+    public void setHasClearedBookings(boolean hasClearedBookings) { this.hasClearedBookings = hasClearedBookings; }
+    public boolean getHasClearedBookings() { return hasClearedBookings; }
 }

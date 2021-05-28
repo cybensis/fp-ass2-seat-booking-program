@@ -9,12 +9,9 @@ import main.model.admin.DownloadReportModel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.SQLException;
 
 public class DownloadReportController {
@@ -46,7 +43,7 @@ public class DownloadReportController {
         FileWriter writer = new FileWriter("temp.csv");
         // This means a date was chosen, and a date is only chosen if the user is generating reports for bookings
         if (singleton.getAdminDateType().equals("generateReports")) {
-            reportData = downloadReportModel.getBookingData(singleton.getDate());
+            reportData = downloadReportModel.getBookingData();
             if (reportData == null) {
                 errorMessage.setText("An unexpected error has occurred");
                 errorMessage.setVisible(true);

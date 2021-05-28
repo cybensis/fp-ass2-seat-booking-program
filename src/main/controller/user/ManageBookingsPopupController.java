@@ -6,7 +6,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Singleton;
-import main.model.user.CreateBookingModel;
 import main.model.user.ManageBookingsModel;
 
 import java.io.IOException;
@@ -38,7 +37,7 @@ public class ManageBookingsPopupController {
             cancel.setVisible(false);
             accept.setVisible(false);
             homepageNav.setVisible(true);
-            manageBookingsModel.removeBooking(singleton.getUser(), singleton.getDate());
+            manageBookingsModel.removeBooking(singleton.getDate());
         }
 
     }

@@ -56,8 +56,6 @@ public class ViewBookingsController {
 
     @FXML
     private void initialize() throws SQLException {
-        // Maybe a good idea to retrieve all submissions, past and present, and anything less than 2 days from now
-        // should be deleted.
         BookingTableRow bookingTableRows[];
         employeeIDColumn.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -88,7 +86,7 @@ public class ViewBookingsController {
     @FXML
     private void acceptButton(MouseEvent event) throws SQLException {
         if (selectedRow != null) {
-            viewBookingsModel.acceptBooking(String.valueOf(selectedRow.getEmployeeID()), selectedRow.getDate());
+            viewBookingsModel.acceptBooking();
             bookingTable.getItems().remove(selectedRow);
         }
     }
@@ -101,7 +99,7 @@ public class ViewBookingsController {
     @FXML
     private void removeEntry(MouseEvent event) throws SQLException {
         if (selectedRow != null) {
-            viewBookingsModel.removeBooking(String.valueOf(selectedRow.getEmployeeID()), selectedRow.getDate());
+            viewBookingsModel.removeBooking();
             bookingTable.getItems().remove(selectedRow);
         }
     }

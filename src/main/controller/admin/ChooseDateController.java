@@ -7,8 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import main.Singleton;
-import main.model.admin.ChooseDateModel;
-import main.model.user.ManageBookingsModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,7 +15,6 @@ import java.time.temporal.ChronoUnit;
 
 public class ChooseDateController {
     private Singleton singleton = Singleton.getInstance();
-    private ChooseDateModel chooseDateModel = new ChooseDateModel();
 
     @FXML
     private Text subHeader;

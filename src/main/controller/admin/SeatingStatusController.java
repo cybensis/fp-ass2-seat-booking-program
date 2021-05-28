@@ -2,7 +2,6 @@ package main.controller.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -34,9 +33,10 @@ public class SeatingStatusController {
 
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException {
         dropdownBox.getItems().addAll("COVID Conditions", "Lockdown", "Normal");
-        subHeader.setText("The current seating status for " + String.valueOf(singleton.getDate()) + ": Normal");
+        String currentStatus = seatingStatusModel.getSeatingStatus();
+        subHeader.setText("The current seating status for " + String.valueOf(singleton.getDate()) + ": " + currentStatus);
     }
 
     @FXML
@@ -49,17 +49,13 @@ public class SeatingStatusController {
         String response = "";
         // This prevents an admin from changing the seating status if the date has bookings, unless they are changing it
         // to normal, since no seats are blocked in normal mode.
-        if (seatingStatusModel.checkForBookings(singleton.getDate()) && !dropdownBox.getValue().equals("Normal")) {
+        if (seatingStatusModel.checkForBookings() && !dropdownBox.getValue().equals("Normal")) {
             responseMessage.setVisible(true);
             responseMessage.setText("This date already has bookings, please delete them before changing the status");
             return;
         }
-        else if (dropdownBox.getValue().equals("COVID Conditions"))
-            response = seatingStatusModel.setSeatingStatus(singleton.getDate(), dropdownBox.getValue());
-        else if (dropdownBox.getValue().equals("Lockdown"))
-            response = seatingStatusModel.setSeatingStatus(singleton.getDate(), dropdownBox.getValue());
-        else if (dropdownBox.getValue().equals("Normal"))
-            response = seatingStatusModel.setSeatingStatus(singleton.getDate(), dropdownBox.getValue());
+        else if (dropdownBox.getValue().equals("COVID Conditions") || dropdownBox.getValue().equals("Lockdown") || dropdownBox.getValue().equals("Normal"))
+            response = seatingStatusModel.setSeatingStatus(dropdownBox.getValue());
 
         responseMessage.setVisible(true);
         responseMessage.setText(response);

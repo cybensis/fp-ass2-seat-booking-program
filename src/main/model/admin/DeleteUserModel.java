@@ -10,6 +10,8 @@ import java.sql.SQLException;
 
 public class DeleteUserModel {
     private Singleton singleton = Singleton.getInstance();
+
+
     public String[] returnUserDetails(String employeeID) throws SQLException {
         PreparedStatement preparedStatement = null;
         String accountDetails[];

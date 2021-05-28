@@ -1,20 +1,11 @@
 package main.controller.admin;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import main.Singleton;
 import main.model.user.CreateBookingModel;
 
@@ -46,8 +37,8 @@ public class GraphicVisualisationController {
         rectangleContainer = new Rectangle[]{seat_0, seat_1, seat_2, seat_3, seat_4, seat_5, seat_6, seat_7, seat_8, seat_9, seat_10, seat_11, seat_12, seat_13, seat_14, seat_15};
         LocalDate chosenDate = singleton.getDate();
         subHeader.setText("Graphic visualisation - " + chosenDate);
-        String seatingStatus = createBookingModel.getSeatingStatus(chosenDate);
-        tablesBooked = createBookingModel.blacklistedDesks(chosenDate, singleton.getUser());
+        String seatingStatus = createBookingModel.getSeatingStatus();
+        tablesBooked = createBookingModel.blacklistedDesks();
         if (seatingStatus.equals("Error") || tablesBooked == null) {
             subHeader.setText("An unexpected error has occurred, please try again");
             return;

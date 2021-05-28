@@ -5,18 +5,17 @@ import main.Singleton;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class SeatingStatusModel {
     private Singleton singleton = Singleton.getInstance();
 
-    public String getSeatingStatus(LocalDate date) throws SQLException {
+    public String getSeatingStatus() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             String checkAlreadyBooked = "SELECT covidConditions.condition FROM dateConditions INNER JOIN covidConditions ON dateConditions.condition = covidConditions.conditionID  WHERE date = ?;";
             preparedStatement = singleton.getConnection().prepareStatement(checkAlreadyBooked);
-            preparedStatement.setString(1, String.valueOf(date));
+            preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 return resultSet.getString("condition");
@@ -33,13 +32,13 @@ public class SeatingStatusModel {
         }
     }
 
-    public boolean checkForBookings(LocalDate date) throws SQLException {
+    public boolean checkForBookings() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             String checkAlreadyBooked = "SELECT count(*) FROM userBookings WHERE date = ?";
             preparedStatement = singleton.getConnection().prepareStatement(checkAlreadyBooked);
-            preparedStatement.setString(1, String.valueOf(date));
+            preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 if (resultSet.getInt("count(*)") > 0)
@@ -56,7 +55,7 @@ public class SeatingStatusModel {
         }
     }
 
-    public String setSeatingStatus(LocalDate date, String status) throws SQLException {
+    public String setSeatingStatus(String status) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
             int conditionID = getStatusID(status);
@@ -64,7 +63,7 @@ public class SeatingStatusModel {
                 return "An error occurrred";
             String checkAlreadyBooked = "INSERT INTO dateConditions (date, condition)  VALUES (?,?);";
             preparedStatement = singleton.getConnection().prepareStatement(checkAlreadyBooked);
-            preparedStatement.setString(1, String.valueOf(date));
+            preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             preparedStatement.setInt(2, conditionID);
             preparedStatement.executeUpdate();
             return "This date condition was successfully set";

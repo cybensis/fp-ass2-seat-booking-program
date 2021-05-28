@@ -9,8 +9,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import main.Singleton;
 import main.model.admin.DeleteUserModel;
-import sun.nio.cs.SingleByte;
-
 import java.io.IOException;
 import java.sql.SQLException;
 

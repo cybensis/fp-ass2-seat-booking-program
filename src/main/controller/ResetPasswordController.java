@@ -88,7 +88,7 @@ public class ResetPasswordController {
             errorText.setVisible(true);
             return;
         }
-        String message = resetPasswordModel.changePassword(username, passwordField.getText());
+        String message = resetPasswordModel.changePassword(passwordField.getText());
         if (!message.equals("Success")) {
             errorText.setText("An error occurred, please try again");
             errorText.setVisible(true);

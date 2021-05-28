@@ -54,9 +54,9 @@ public class CreateBookingController {
             sceneHeader.setText("Update booking - " + chosenDate);
         else
             sceneHeader.setText("Create a new booking - " + chosenDate);
-        String seatingStatus = createBookingModel.getSeatingStatus(chosenDate);
-        int pastAndFutureBookedSeat[] = createBookingModel.getBlockedDesks(singleton.getUser());
-        tablesBooked = createBookingModel.blacklistedDesks(chosenDate, singleton.getUser());
+        String seatingStatus = createBookingModel.getSeatingStatus();
+        int pastAndFutureBookedSeat[] = createBookingModel.getBlockedDesks();
+        tablesBooked = createBookingModel.blacklistedDesks();
         if (seatingStatus.equals("Error") || pastAndFutureBookedSeat == null || tablesBooked == null) {
             sceneHeader.setText("An unexpected error has occurred, please try again");
             return;

@@ -9,8 +9,6 @@ import main.Singleton;
 import main.model.user.CreateBookingModel;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CreateBookingPopupController {
@@ -37,11 +35,11 @@ public class CreateBookingPopupController {
         if (!submittedAlready) {
             if (singleton.getUpdateBooking()) {
                 popupText.setText("Are you sure you want to change this booking?");
-                response = createBookingModel.updateBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
+                response = createBookingModel.updateBooking();
                 singleton.setUpdateBooking(false);
             }
             else
-                response = createBookingModel.addBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
+                response = createBookingModel.addBooking();
 
             accept.setVisible(false);
             cancel.setVisible(false);
