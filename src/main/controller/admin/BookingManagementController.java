@@ -13,9 +13,6 @@ public class BookingManagementController {
     private Singleton singleton = Singleton.getInstance();
 
     @FXML
-    private Label isConnected;
-
-    @FXML
     private Text dotPointOne;
 
     @FXML
@@ -41,20 +38,20 @@ public class BookingManagementController {
 
     @FXML
     private void manageBookings(MouseEvent event) throws IOException {
-        this.singleton.setViewBookingsType("existingBookings");
-        this.singleton.changeScene("main/ui/admin/viewBookings.fxml");
+        singleton.setViewBookingsType("existingBookings");
+        singleton.changeScene("main/ui/admin/viewBookings.fxml");
     }
 
     @FXML
     private void manageRequests(MouseEvent event) throws IOException {
-        this.singleton.setViewBookingsType("requestedBookings");
-        this.singleton.changeScene("main/ui/admin/viewBookings.fxml");
+        singleton.setViewBookingsType("requestedBookings");
+        singleton.changeScene("main/ui/admin/viewBookings.fxml");
     }
 
     @FXML
     private void seatingStatus(MouseEvent event) throws IOException {
-        this.singleton.setAdminDateType("seatingStatus");
-        this.singleton.changeScene("main/ui/admin/chooseDate.fxml");
+        singleton.setAdminDateType("seatingStatus");
+        singleton.changeScene("main/ui/admin/chooseDate.fxml");
 
     }
 

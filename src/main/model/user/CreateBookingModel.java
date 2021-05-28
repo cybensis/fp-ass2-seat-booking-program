@@ -44,7 +44,7 @@ public class CreateBookingModel {
             }
             return blockedDesks;
         } catch (Exception e) {
-            return blockedDesks;
+            return null;
         } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
@@ -90,7 +90,7 @@ public class CreateBookingModel {
             }
             return tablesBooked;
         } catch (Exception e) {
-            return tablesBooked;
+            return null;
         } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
@@ -104,25 +104,36 @@ public class CreateBookingModel {
         PreparedStatement preparedStatement = null;
         int employeeID = getEmployeeID(username);
         String insertQuery = "INSERT INTO userBookings (deskID, employeeID, date, state) VALUES (?,?,?,'review')";
-        preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
-        preparedStatement.setInt(1, deskid);
-        preparedStatement.setInt(2, employeeID);
-        preparedStatement.setString(3, String.valueOf(date));
-        int response = preparedStatement.executeUpdate();
-        return "Success";
+        try {
+            preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
+            preparedStatement.setInt(1, deskid);
+            preparedStatement.setInt(2, employeeID);
+            preparedStatement.setString(3, String.valueOf(date));
+            int response = preparedStatement.executeUpdate();
+            return "Success";
+        }
+        catch (SQLException error) {
+            return "An unexpected error occurred";
+        }
     }
 
     public String updateBooking(String username, int deskid, LocalDate date) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertQuery = "UPDATE userBookings SET deskID = ?, username = ?, date = ?, state = 'review' WHERE username  = ? AND date = ?";
-        preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
-        preparedStatement.setInt(1, deskid);
-        preparedStatement.setString(2, username);
-        preparedStatement.setString(3, String.valueOf(date));
-        preparedStatement.setString(4, username);
-        preparedStatement.setString(5, String.valueOf(date));
-        int response = preparedStatement.executeUpdate();
-        return "Success";
+        int employeeID = getEmployeeID(username);
+        String insertQuery = "UPDATE userBookings SET deskID = ?, employeeID = ?, date = ?, state = 'review' WHERE employeeID  = ? AND date = ?";
+        try {
+            preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
+            preparedStatement.setInt(1, deskid);
+            preparedStatement.setInt(2, employeeID);
+            preparedStatement.setString(3, String.valueOf(date));
+            preparedStatement.setInt(4, employeeID);
+            preparedStatement.setString(5, String.valueOf(date));
+            int response = preparedStatement.executeUpdate();
+            return "Success";
+        }
+        catch (SQLException error) {
+            return "An unexpected error occurred";
+        }
     }
 
     public int getEmployeeID(String username) throws SQLException {

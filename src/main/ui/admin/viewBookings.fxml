@@ -34,9 +34,9 @@
             <Font name="SansSerif Bold" size="17.0" />
          </font>
       </Button>
-      <Text fx:id="errorMessage" fill="#e40000" layoutX="243.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error: You already have a booking this day" visible="false" wrappingWidth="434.9154357910156">
+      <Text fx:id="errorMessage" fill="#e40000" layoutX="274.0" layoutY="542.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error: An unexpected error occurred" visible="false" wrappingWidth="434.9154357910156">
          <font>
-            <Font size="23.0" />
+            <Font size="21.0" />
          </font>
       </Text>
       <ScrollPane hbarPolicy="NEVER" layoutX="274.0" layoutY="204.0" prefHeight="313.0" prefWidth="733.0" vbarPolicy="ALWAYS">

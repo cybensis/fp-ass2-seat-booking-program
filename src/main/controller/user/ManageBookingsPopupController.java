@@ -34,10 +34,10 @@ public class ManageBookingsPopupController {
     private void removeBooking(MouseEvent event) throws IOException, SQLException {
         if (!submittedAlready) {
             submittedAlready = true;
-            this.header.setText("Your booking has been deleted");
-            this.cancel.setVisible(false);
-            this.accept.setVisible(false);
-            this.homepageNav.setVisible(true);
+            header.setText("Your booking has been deleted");
+            cancel.setVisible(false);
+            accept.setVisible(false);
+            homepageNav.setVisible(true);
             manageBookingsModel.removeBooking(singleton.getUser(), singleton.getDate());
         }
 

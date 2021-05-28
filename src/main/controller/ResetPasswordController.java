@@ -18,13 +18,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class ResetPasswordController {
-    ResetPasswordModel resetPasswordModel = new ResetPasswordModel();
-    Singleton singleton = Singleton.getInstance();
+    private ResetPasswordModel resetPasswordModel = new ResetPasswordModel();
+    private Singleton singleton = Singleton.getInstance();
     //Since this single resetPassword page holds 3 different scenes in one, enter username, answer question, enter new
     //password, I use this variable to determine which of these states it's at.
-    String currentScene = "enterUsername";
-    String secretQuestionDetails[];
-    String username;
+    private String currentScene = "enterUsername";
+    private String secretQuestionDetails[];
+    private String username;
 
     @FXML
     private TextField textField;
@@ -70,99 +70,96 @@ public class ResetPasswordController {
 
     @FXML
     private void submit(MouseEvent event) throws SQLException {
-        //if something isnt set, then hes inputting username, after username success, then submit again, and it will
-        // check for
-        if (this.currentScene.equals("enterUsername")) {
-
+        if (currentScene.equals("enterUsername")) {
             retrieveUserSQ();
         }
-        else if (this.currentScene.equals("secretQuestion")) {
+        else if (currentScene.equals("secretQuestion")) {
             checkSQAnswer();
         }
-        else if (this.currentScene.equals("newPassword")) {
+        else if (currentScene.equals("newPassword")) {
             changePassword();
         }
 
     }
 
     private void changePassword() throws SQLException {
-        if (this.textField.getText().trim().isEmpty()) {
-            this.errorText.setText("Please enter a new password");
-            this.errorText.setVisible(true);
+        if (passwordField.getText().trim().isEmpty() || passwordField.getText().trim().length() < 5) {
+            errorText.setText("Please make sure your password is greater than 5 characters");
+            errorText.setVisible(true);
             return;
         }
-        String message = resetPasswordModel.changePassword(this.username, this.passwordField.getText());
-        if (message.equals("error")) {
-            this.errorText.setText("An error has occurred");
-            this.errorText.setVisible(true);
+        String message = resetPasswordModel.changePassword(username, passwordField.getText());
+        if (!message.equals("Success")) {
+            errorText.setText("An error occurred, please try again");
+            errorText.setVisible(true);
         }
         else {
-            this.errorText.setVisible(false);
-            this.textField.setVisible(false);
-            this.textAboveField.setVisible(false);
-            this.submit.setVisible(false);
-            this.cancel.setVisible(false);
-            this.lineTop.setVisible(false);
-            this.lineBottom.setVisible(false);
-            this.passwordField.setVisible(false);
-            this.resetPasswordHeader.setText("Your password has successfully been reset");
-            this.resetPasswordHeader.setTextAlignment(TextAlignment.CENTER);
-            this.tickIcon.setVisible(true);
-            this.loginRedirectText.setVisible(true);
+            errorText.setVisible(false);
+            textField.setVisible(false);
+            textAboveField.setVisible(false);
+            submit.setVisible(false);
+            cancel.setVisible(false);
+            lineTop.setVisible(false);
+            lineBottom.setVisible(false);
+            passwordField.setVisible(false);
+            resetPasswordHeader.setText("Your password has successfully been reset");
+            resetPasswordHeader.setTextAlignment(TextAlignment.CENTER);
+            tickIcon.setVisible(true);
+            loginRedirectText.setVisible(true);
         }
 
     }
 
     private void checkSQAnswer() {
         String answer;
-        if (this.textField.getText().trim().isEmpty()) {
-            this.errorText.setText("Please answer your secret question");
-            this.errorText.setVisible(true);
+        if (textField.getText().trim().isEmpty()) {
+            errorText.setText("Please answer your secret question");
+            errorText.setVisible(true);
             return;
         }
-        answer = this.textField.getText();
-        if (this.secretQuestionDetails[1].toLowerCase().equals(answer.toLowerCase())) {
-            this.secretQuestion.setVisible(false);
-            this.errorText.setVisible(false);
-            this.textAboveField.setVisible(true);
-            this.textAboveField.setText("Please enter your new password");
-            this.textField.setVisible(false);
-            this.passwordField.setVisible(true);
-            this.secretQuestionHeader.setVisible(false);
-            this.currentScene = "newPassword";
+        answer = textField.getText();
+        if (secretQuestionDetails[1].toLowerCase().equals(answer.toLowerCase())) {
+            secretQuestion.setVisible(false);
+            errorText.setVisible(false);
+            textAboveField.setVisible(true);
+            textAboveField.setText("Please enter your new password");
+            textField.setVisible(false);
+            passwordField.setVisible(true);
+            secretQuestionHeader.setVisible(false);
+            currentScene = "newPassword";
         }
         else {
-            this.errorText.setVisible(false);
-            this.errorText.setText("What you wrote does not match your answer");
+            errorText.setVisible(true);
+            errorText.setText("What you wrote does not match your answer");
         }
     }
 
     private void retrieveUserSQ() throws SQLException {
         String username;
         username = textField.getText().trim();
-        if (this.textField.getText().trim().isEmpty()) {
-            this.errorText.setText("Please enter your username");
-            this.errorText.setVisible(true);
+        if (textField.getText().trim().isEmpty()) {
+            errorText.setText("Please enter your username");
+            errorText.setVisible(true);
             return;
         }
-        this.secretQuestionDetails = resetPasswordModel.getSecretQuestion(username);
-        if (this.secretQuestionDetails[0].equals("noAccount")) {
-            this.errorText.setText("No account was found with this username");
-            this.errorText.setVisible(true);
+        secretQuestionDetails = resetPasswordModel.getSecretQuestion(username);
+        if (secretQuestionDetails[0].equals("noAccount")) {
+            errorText.setText("No account was found with this username");
+            errorText.setVisible(true);
         }
-        else if (this.secretQuestionDetails[0].equals("error")) {
-            this.errorText.setText("An error occurred, please try again");
-            this.errorText.setVisible(true);
+        else if (secretQuestionDetails[0].equals("error")) {
+            errorText.setText("An error occurred, please try again");
+            errorText.setVisible(true);
         }
         else {
-            this.errorText.setVisible(false);
-            this.textAboveField.setVisible(false);
-            this.secretQuestion.setVisible(true);
-            this.secretQuestion.setText(this.secretQuestionDetails[0]);
-            this.secretQuestionHeader.setVisible(true);
-            this.cancel.setVisible(true);
-            this.textField.setText("");
-            this.currentScene = "secretQuestion";
+            errorText.setVisible(false);
+            textAboveField.setVisible(false);
+            secretQuestion.setVisible(true);
+            secretQuestion.setText(secretQuestionDetails[0]);
+            secretQuestionHeader.setVisible(true);
+            cancel.setVisible(true);
+            textField.setText("");
+            currentScene = "secretQuestion";
             this.username = username;
         }
     }

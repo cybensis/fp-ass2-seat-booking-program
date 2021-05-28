@@ -10,10 +10,7 @@ import main.Singleton;
 import java.io.IOException;
 
 public class AdminHomeController {
-    Singleton singleton = Singleton.getInstance();
-
-    @FXML
-    private Label isConnected;
+    private Singleton singleton = Singleton.getInstance();
 
     @FXML
     private Text dotPointOne;

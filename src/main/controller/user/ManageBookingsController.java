@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 
 public class ManageBookingsController {
     private Singleton singleton = Singleton.getInstance();
@@ -102,23 +101,23 @@ public class ManageBookingsController {
     @FXML
     private void selectRow(MouseEvent event) {
         try {
-            String testForNull = this.bookingTable.getSelectionModel().getSelectedItem().getDate();
+            String testForNull = bookingTable.getSelectionModel().getSelectedItem().getDate();
         }
         catch (NullPointerException error) {
-            this.removeButton.setVisible(false);
-            this.updateButton.setVisible(false);
-            this.selectedRow = null;
-            this.singleton.setDate(null);
+            removeButton.setVisible(false);
+            updateButton.setVisible(false);
+            selectedRow = null;
+            singleton.setDate(null);
             return;
         }
         LocalDate currentDate = LocalDate.now();
-        this.removeButton.setVisible(true);
-        this.selectedRow = this.bookingTable.getSelectionModel().getSelectedItem();
-        this.singleton.setDate(LocalDate.parse(this.selectedRow.getDate()));
-        if (ChronoUnit.DAYS.between(currentDate, LocalDate.parse(this.selectedRow.getDate())) > 2)
-            this.updateButton.setVisible(true);
+        removeButton.setVisible(true);
+        selectedRow = bookingTable.getSelectionModel().getSelectedItem();
+        singleton.setDate(LocalDate.parse(selectedRow.getDate()));
+        if (ChronoUnit.DAYS.between(currentDate, LocalDate.parse(selectedRow.getDate())) > 2)
+            updateButton.setVisible(true);
         else
-            this.updateButton.setVisible(false);
+            updateButton.setVisible(false);
     }
 
 
@@ -126,16 +125,16 @@ public class ManageBookingsController {
     @FXML
     private void initialize() throws SQLException {
         ManageBookingTableRow userBookings[] = manageBookingsModel.getUserBookings(singleton.getUser());
-        this.deskIDColumn.setCellValueFactory(new PropertyValueFactory<>("deskID"));
-        this.stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
-        this.dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        this.bookingTable.selectionModelProperty().addListener((Observable observable) -> {
-            int index = this.bookingTable.getSelectionModel().getSelectedIndex();
+        deskIDColumn.setCellValueFactory(new PropertyValueFactory<>("deskID"));
+        stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        bookingTable.selectionModelProperty().addListener((Observable observable) -> {
+            int index = bookingTable.getSelectionModel().getSelectedIndex();
             ManageBookingTableRow row = bookingTable.getItems().get(index);
         });
         if (userBookings != null) {
             for (int i = 0; i < userBookings.length; i++) {
-                this.bookingTable.getItems().add(userBookings[i]);
+                bookingTable.getItems().add(userBookings[i]);
             }
         }
     }

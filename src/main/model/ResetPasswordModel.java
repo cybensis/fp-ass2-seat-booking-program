@@ -18,7 +18,6 @@ public class ResetPasswordModel {
     public String changePassword(String username, String password) throws SQLException {
         PreparedStatement preparedStatement = null;
         String query = "UPDATE user SET password = ? WHERE username = ?";
-        String message = "error";
         System.out.println(password);
         String passwordHash = BCrypt.hashpw(password,BCrypt.gensalt());
         try {
@@ -26,14 +25,13 @@ public class ResetPasswordModel {
             preparedStatement.setString(1, passwordHash);
             preparedStatement.setString(2, username);
             int response = preparedStatement.executeUpdate();
-            message = "success";
+            return "Success";
         } catch (Exception e) {
-            message = "error";
+            return "error";
         }
         finally {
             if (preparedStatement != null)
                 preparedStatement.close();
-            return message;
         }
     }
 

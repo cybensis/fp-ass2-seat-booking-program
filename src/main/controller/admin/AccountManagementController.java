@@ -10,10 +10,7 @@ import main.Singleton;
 import java.io.IOException;
 
 public class AccountManagementController {
-    Singleton singleton = Singleton.getInstance();
-
-    @FXML
-    private Label isConnected;
+    private Singleton singleton = Singleton.getInstance();
 
     @FXML
     private Text dotPointOne;
@@ -35,25 +32,25 @@ public class AccountManagementController {
 
     @FXML
     private void initialize() {
-        if (!this.singleton.getAccountManagementDetails("accountType").equals(""))
-            updateDotPoints(this.singleton.getAccountManagementDetails("accountType"));
+        if (!singleton.getAccountManagementDetails("accountType").equals(""))
+            updateDotPoints(singleton.getAccountManagementDetails("accountType"));
 
     }
 
     @FXML
     private void goBack(MouseEvent event) throws IOException {
-        if (!this.singleton.getAccountManagementDetails("accountType").equals("")) {
-            this.singleton.setAccountManagementDetails("", "accountType");
-            this.singleton.changeScene("main/ui/admin/accountManagement.fxml");
+        if (!singleton.getAccountManagementDetails("accountType").equals("")) {
+            singleton.setAccountManagementDetails("", "accountType");
+            singleton.changeScene("main/ui/admin/accountManagement.fxml");
         }
         else
-            this.singleton.changeScene("main/ui/admin/adminHome.fxml");
+            singleton.changeScene("main/ui/admin/adminHome.fxml");
 
     }
 
     @FXML
     private void manageAdmin(MouseEvent event) {
-        this.singleton.setAccountManagementDetails("admin", "accountType");
+        singleton.setAccountManagementDetails("admin", "accountType");
         updateDotPoints("admin");
 
 
@@ -61,55 +58,46 @@ public class AccountManagementController {
 
     @FXML
     private void manageEmployees(MouseEvent event) {
-        this.singleton.setAccountManagementDetails("employee", "accountType");
+        singleton.setAccountManagementDetails("employee", "accountType");
         updateDotPoints("employee");
     }
 
     private void updateDotPoints(String accountType) {
-        this.dotPointThree.setVisible(true);
-        this.dotThree.setVisible(true);
+        dotPointThree.setVisible(true);
+        dotThree.setVisible(true);
         if (accountType.equals("admin"))
-            this.subHeader.setText("Account Management - Admin");
+            subHeader.setText("Account Management - Admin");
         else if (accountType.equals("employee"))
-            this.subHeader.setText("Account Management - Employees");
+            subHeader.setText("Account Management - Employees");
 
-        this.dotPointOne.setText("Add new account");
-        this.dotPointOne.setOnMouseClicked(event -> {
-            this.singleton.setAccountManagementDetails("addAccount", "accountAction");
+        dotPointOne.setText("Add new account");
+        dotPointOne.setOnMouseClicked(event -> {
+            singleton.setAccountManagementDetails("addAccount", "accountAction");
             try {
-                this.singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
+                singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
-        this.dotPointTwo.setText("Update account details");
-        this.dotPointTwo.setOnMouseClicked(event -> {
-            this.singleton.setAccountManagementDetails("updateAccount", "accountAction");
+        dotPointTwo.setText("Update account details");
+        dotPointTwo.setOnMouseClicked(event -> {
+            singleton.setAccountManagementDetails("updateAccount", "accountAction");
             try {
-                this.singleton.changeScene("main/ui/admin/selectUser.fxml");
+                singleton.changeScene("main/ui/admin/selectUser.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
-        this.dotPointThree.setText("Delete account");
-        this.dotPointThree.setOnMouseClicked(event -> {
-            this.singleton.setAccountManagementDetails("deleteAccount", "accountAction");
+        dotPointThree.setText("Delete account");
+        dotPointThree.setOnMouseClicked(event -> {
+            singleton.setAccountManagementDetails("deleteAccount", "accountAction");
             try {
-                this.singleton.changeScene("main/ui/admin/selectUser.fxml");
+                singleton.changeScene("main/ui/admin/selectUser.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
-
-
-    }
-
-
-
-    private void deleteAccount() {
-
     }
 }

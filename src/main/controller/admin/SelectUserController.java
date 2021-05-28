@@ -26,24 +26,26 @@ public class SelectUserController {
 
     @FXML
     private void initialize() {
-        if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
-            this.subHeader.setText("Choose account to update");
-        else if (this.singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
-            this.subHeader.setText("Choose account to delete");
+        if (singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
+            subHeader.setText("Choose account to update");
+        else if (singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
+            subHeader.setText("Choose account to delete");
     }
 
     @FXML
     private void search(MouseEvent event) throws SQLException, IOException {
         String response = searchUser();
         if (response.equals("found")) {
-            this.singleton.setAccountManagementDetails(String.valueOf(this.employeeIDField.getText().trim()), "employeeID");
-            if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
-                this.singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
-            else if (this.singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
-                this.singleton.changeScene("main/ui/admin/deleteUser.fxml");
+            singleton.setAccountManagementDetails(String.valueOf(employeeIDField.getText().trim()), "employeeID");
+            if (singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
+                singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
+            else if (singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
+                singleton.changeScene("main/ui/admin/deleteUser.fxml");
         }
-        else
-            this.errorText.setText(response);
+        else {
+            errorText.setText(response);
+            errorText.setVisible(true);
+        }
 
     }
 
@@ -51,11 +53,11 @@ public class SelectUserController {
     private String searchUser() throws SQLException{
         int employeeID;
         try {
-            employeeID = Integer.parseInt(this.employeeIDField.getText().trim());
-            if (this.singleton.getAccountManagementDetails("accountType").equals("admin"))
-                return  this.selectUserModel.searchUserID( this.employeeIDField.getText(), "admin");
+            employeeID = Integer.parseInt(employeeIDField.getText().trim());
+            if (singleton.getAccountManagementDetails("accountType").equals("admin"))
+                return  selectUserModel.searchUserID( employeeIDField.getText(), "admin");
             else
-                return this.selectUserModel.searchUserID( this.employeeIDField.getText(), "employee");
+                return selectUserModel.searchUserID( employeeIDField.getText(), "employee");
         }
         catch (NumberFormatException error) {
             return "Please make sure you've input a number";
@@ -64,6 +66,6 @@ public class SelectUserController {
 
     @FXML
     private void goBack(MouseEvent event) throws IOException {
-        this.singleton.changeScene("main/ui/admin/accountManagement.fxml");
+        singleton.changeScene("main/ui/admin/accountManagement.fxml");
     }
 }

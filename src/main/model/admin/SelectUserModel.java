@@ -24,11 +24,11 @@ public class SelectUserModel {
             if (resultSet.next())
                 return "found";
             else
-                return "notFound";
+                return "No user was found with this ID";
         }
         catch (Exception e)
         {
-            return "error";
+            return "Sorry, an unexpected error occurred";
         }finally {
             if (preparedStatement != null)
                 preparedStatement.close();

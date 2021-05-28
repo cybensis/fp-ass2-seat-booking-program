@@ -20,7 +20,7 @@
             <Image url="@../../img/backButton.png" />
          </image>
       </ImageView>
-      <Text fx:id="subHeader" layoutX="243.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generate reports -" wrappingWidth="451.099853515625">
+      <Text fx:id="subHeader" layoutX="243.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generate reports for employees" wrappingWidth="803.099853515625" AnchorPane.bottomAnchor="556.0" AnchorPane.topAnchor="131.0">
          <font>
             <Font name="SansSerif Bold" size="29.0" />
          </font>

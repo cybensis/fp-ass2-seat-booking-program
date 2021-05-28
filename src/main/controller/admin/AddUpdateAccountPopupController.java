@@ -8,7 +8,7 @@ import main.Singleton;
 import java.io.IOException;
 
 public class AddUpdateAccountPopupController {
-    Singleton singleton = Singleton.getInstance();
+    private Singleton singleton = Singleton.getInstance();
 
     @FXML
     private Text mainHeader;
@@ -18,14 +18,14 @@ public class AddUpdateAccountPopupController {
 
     @FXML
     private void initialize() {
-        if (this.singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
-            this.mainHeader.setText("This account has successfully been updated");
-        else if (this.singleton.getAccountManagementDetails("accountAction").equals("addAccount"))
-            this.mainHeader.setText("This account has successfully been added");
+        if (singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
+            mainHeader.setText("This account has successfully been updated");
+        else if (singleton.getAccountManagementDetails("accountAction").equals("addAccount"))
+            mainHeader.setText("This account has successfully been added");
     }
     @FXML
     private void goHome(MouseEvent event) throws IOException {
-        this.singleton.changeScene("main/ui/admin/adminHome.fxml");
+        singleton.changeScene("main/ui/admin/adminHome.fxml");
     }
 
 }

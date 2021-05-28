@@ -31,7 +31,6 @@ public class DownloadReportModel {
                 i++;
             }
             return bookingData;
-            // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
         }
         catch (SQLException error)
         {
@@ -65,11 +64,9 @@ public class DownloadReportModel {
                 i++;
             }
             return employeeData;
-            // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
         }
         catch (SQLException error)
         {
-            System.out.println(error);
             employeeData = null;
             return employeeData;
         }finally {

@@ -1,8 +1,7 @@
 package main.model;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import main.BCrypt;
-import main.SQLConnection;
+import main.controller.Employee;
 import main.Singleton;
 
 import java.sql.*;
@@ -21,11 +20,11 @@ public class RegisterModel {
         }
     }
 
-    public String attemptRegister(Integer employeeID, String role, String firstName, String surname, String username, String password, String secretQ, String secretQAnswer, int accountTypeID) throws SQLException {
+    public String attemptRegister(Employee newEmployee) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
-        String doesUserExist = doesUserExist(username, employeeID);
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        String doesUserExist = doesUserExist(newEmployee.getUsername(), newEmployee.getEmployeeID());
+        String hashedPassword = BCrypt.hashpw(newEmployee.getPassword(), BCrypt.gensalt());
         if (!doesUserExist.equals("noUser")) {
                     return doesUserExist;
             }
@@ -35,15 +34,15 @@ public class RegisterModel {
                     resultSet = null;
                     String insertQuery = "INSERT INTO user (firstName,lastName,password,employeeID,secretQuestion,secretQuestionAnswer,username,employeeRole, accountType) VALUES (?,?,?,?,?,?,?,?,?)";
                     preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
-                    preparedStatement.setString(1, firstName);
-                    preparedStatement.setString(2, surname);
+                    preparedStatement.setString(1, newEmployee.getFirstName());
+                    preparedStatement.setString(2, newEmployee.getSurname());
                     preparedStatement.setString(3, hashedPassword);
-                    preparedStatement.setInt(4, employeeID);
-                    preparedStatement.setString(5, secretQ);
-                    preparedStatement.setString(6, secretQAnswer);
-                    preparedStatement.setString(7, username);
-                    preparedStatement.setString(8, role);
-                    preparedStatement.setInt(9, accountTypeID);
+                    preparedStatement.setInt(4, newEmployee.getEmployeeID());
+                    preparedStatement.setString(5, newEmployee.getSecretQ());
+                    preparedStatement.setString(6, newEmployee.getSecretQAnswer());
+                    preparedStatement.setString(7, newEmployee.getUsername());
+                    preparedStatement.setString(8, newEmployee.getRole());
+                    preparedStatement.setInt(9, newEmployee.getAccountTypeID());
                     int response = preparedStatement.executeUpdate();
                     return "Success";
                 }
@@ -93,14 +92,14 @@ public class RegisterModel {
         return accountDetails;
     }
 
-    public String updateUserDetails(int originalID, String originalUsername, Integer employeeID, String role, String firstName, String surname, String username, String password, String secretQ, String secretQAnswer, int accountTypeID) throws SQLException {
+    public String updateUserDetails(Employee newEmployee, int originalID, String originalUsername) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
         String doesUserExist = "noUser";
-        if (originalID != employeeID)
-            doesUserExist = checkExistingID(employeeID);
-        if (!originalUsername.equals(username) && !doesUserExist.equals("noUser"))
-            doesUserExist = checkExistingUsername(username);
+        if (originalID != newEmployee.getEmployeeID())
+            doesUserExist = checkExistingID(newEmployee.getEmployeeID());
+        if (!originalUsername.equals(newEmployee.getUsername()) && !doesUserExist.equals("noUser"))
+            doesUserExist = checkExistingUsername(newEmployee.getUsername());
         if (!doesUserExist.equals("noUser"))
             return doesUserExist;
         else{
@@ -109,14 +108,14 @@ public class RegisterModel {
                 resultSet = null;
                 String insertQuery = "UPDATE user SET firstName = ?,lastName = ?,password = ?,employeeID = ?,secretQuestion = ?,secretQuestionAnswer = ?, username = ?,employeeRole = ? WHERE employeeID = ?";
                 preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
-                preparedStatement.setString(1, firstName);
-                preparedStatement.setString(2, surname);
-                preparedStatement.setString(3, password);
-                preparedStatement.setInt(4, employeeID);
-                preparedStatement.setString(5, secretQ);
-                preparedStatement.setString(6, secretQAnswer);
-                preparedStatement.setString(7, username);
-                preparedStatement.setString(8, role);
+                preparedStatement.setString(1, newEmployee.getFirstName());
+                preparedStatement.setString(2, newEmployee.getSurname());
+                preparedStatement.setString(3, newEmployee.getPassword());
+                preparedStatement.setInt(4, newEmployee.getEmployeeID());
+                preparedStatement.setString(5, newEmployee.getSecretQ());
+                preparedStatement.setString(6, newEmployee.getSecretQAnswer());
+                preparedStatement.setString(7, newEmployee.getUsername());
+                preparedStatement.setString(8, newEmployee.getRole());
                 preparedStatement.setInt(9, originalID);
                 int response = preparedStatement.executeUpdate();
                 return "Success";
@@ -133,6 +132,7 @@ public class RegisterModel {
         }
     }
 
+
     private String doesUserExist(String username, int employeeID) {
         String response = checkExistingID(employeeID);
         if (response.equals("noUser"))
@@ -140,6 +140,8 @@ public class RegisterModel {
         else
             return response;
     }
+
+
     private String checkExistingID(int employeeID) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;

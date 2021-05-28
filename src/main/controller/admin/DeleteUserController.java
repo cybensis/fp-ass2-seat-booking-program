@@ -51,49 +51,54 @@ public class DeleteUserController {
     @FXML
     private void initialize() throws SQLException {
             String accountDetails[];
-            this.subHeader.setText("Delete "+this.singleton.getAccountManagementDetails("accountType")+" account");
-            accountDetails = this.deleteUserModel.returnUserDetails(this.singleton.getAccountManagementDetails("employeeID"));
+            subHeader.setText("Delete "+singleton.getAccountManagementDetails("accountType")+" account");
+            accountDetails = deleteUserModel.returnUserDetails(singleton.getAccountManagementDetails("employeeID"));
             if (accountDetails[0].equals("error")) {
-                this.nameText.setVisible(false);
-                this.usernameText.setVisible(false);
-                this.deleteButton.setVisible(false);
-                this.idText.setText("An unexpected error has occurred");
+                nameText.setVisible(false);
+                usernameText.setVisible(false);
+                deleteButton.setVisible(false);
+                idText.setText("An unexpected error has occurred");
             }
             else {
-                this.nameText.setText("Name: " + accountDetails[0]);
-                this.usernameText.setText("Username: " + accountDetails[1]);
-                this.idText.setText("Employee ID: " + this.singleton.getAccountManagementDetails("employeeID"));
+                nameText.setText("Name: " + accountDetails[0]);
+                usernameText.setText("Username: " + accountDetails[1]);
+                idText.setText("Employee ID: " + singleton.getAccountManagementDetails("employeeID"));
             }
 
     }
 
     @FXML
-    void deleteUser(MouseEvent event) throws SQLException {
-        String response = this.deleteUserModel.deleteUser(this.singleton.getAccountManagementDetails("employeeID"));
-        System.out.println(response);
+    private void deleteUser(MouseEvent event) throws SQLException {
+        String response = deleteUserModel.deleteUser(singleton.getAccountManagementDetails("employeeID"));
         if (response.equals("success")) {
-            this.nameText.setVisible(false);
-            this.subHeader.setVisible(false);
-            this.usernameText.setVisible(false);
-            this.deleteButton.setVisible(false);
-            this.idText.setVisible(false);
-            this.headerLine.setVisible(false);
-            this.headerText.setText("Account deleted");
-            this.headerText.setTextAlignment(TextAlignment.CENTER);
-            this.tickImage.setVisible(true);
-            this.homeNavText.setVisible(true);
-
+            nameText.setVisible(false);
+            subHeader.setVisible(false);
+            usernameText.setVisible(false);
+            deleteButton.setVisible(false);
+            idText.setVisible(false);
+            headerLine.setVisible(false);
+            headerText.setText("Account deleted");
+            headerText.setTextAlignment(TextAlignment.CENTER);
+            tickImage.setVisible(true);
+            homeNavText.setVisible(true);
         }
+        else {
+            nameText.setVisible(false);
+            usernameText.setVisible(false);
+            deleteButton.setVisible(false);
+            idText.setText("An unexpected error has occurred");
+        }
+
     }
 
     @FXML
-    void goBack(MouseEvent event) throws IOException {
-        this.singleton.changeScene("main/ui/admin/AccountManagement.fxml");
+    private void goBack(MouseEvent event) throws IOException {
+        singleton.changeScene("main/ui/admin/AccountManagement.fxml");
     }
 
     @FXML
     private void goHome(MouseEvent event) throws IOException {
-        this.singleton.changeScene("main/ui/admin/adminHome.fxml");
+        singleton.changeScene("main/ui/admin/adminHome.fxml");
     }
 
 }

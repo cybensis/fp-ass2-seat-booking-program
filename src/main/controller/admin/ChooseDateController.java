@@ -19,7 +19,6 @@ public class ChooseDateController {
     private Singleton singleton = Singleton.getInstance();
     private ChooseDateModel chooseDateModel = new ChooseDateModel();
 
-
     @FXML
     private Text subHeader;
 

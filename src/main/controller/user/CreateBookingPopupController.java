@@ -33,21 +33,27 @@ public class CreateBookingPopupController {
 
     @FXML
     private void acceptBooking(MouseEvent event) throws SQLException {
+        String response = "";
         if (!submittedAlready) {
             if (singleton.getUpdateBooking()) {
-                createBookingModel.updateBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
+                popupText.setText("Are you sure you want to change this booking?");
+                response = createBookingModel.updateBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
                 singleton.setUpdateBooking(false);
             }
             else
-                createBookingModel.addBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
+                response = createBookingModel.addBooking(singleton.getUser(), singleton.getChosenDesk(), singleton.getDate());
 
             accept.setVisible(false);
             cancel.setVisible(false);
-            popupText.setText("Your request has been sent to an admin");
             homepageNav.setVisible(true);
             submittedAlready = true;
             singleton.setChosenDesk(-1);
             singleton.setDate(null);
+            if (!response.equals("Success"))
+                popupText.setText("Sorry, an unexpected error occurred");
+            else
+                popupText.setText("Your request has been sent to an admin");
+
         }
 
     }

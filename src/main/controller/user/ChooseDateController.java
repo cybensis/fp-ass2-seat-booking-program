@@ -60,6 +60,7 @@ public class ChooseDateController {
 
     @FXML
     private void proceed(MouseEvent event) throws IOException, SQLException {
+
         if (!singleton.getUpdateBooking() && ChronoUnit.DAYS.between(LocalDate.now(), dateField.getValue()) < 2) {
             errorMessage.setText("Error: Your booking must be at least 2 days from now");
             errorMessage.setVisible(true);
@@ -72,15 +73,13 @@ public class ChooseDateController {
             return;
         }
         if (singleton.getUpdateBooking()) {
-            System.out.println(ChronoUnit.DAYS.between(singleton.getDate(), dateField.getValue()));
-            if (ChronoUnit.DAYS.between(singleton.getDate(), dateField.getValue()) < 2) {
+            if (ChronoUnit.DAYS.between(LocalDate.now(), dateField.getValue()) < 2) {
                 errorMessage.setText("Error: New date must be at least 2 days from today");
                 errorMessage.setVisible(true);
             }
             else {
-                manageBookingsModel.updateBooking(singleton.getUser(), singleton.getDate(), dateField.getValue());
-                singleton.setDate(null);
-                singleton.changeScene("main/ui/user/manageBookings.fxml");
+                singleton.setDate(dateField.getValue());
+                singleton.changeScene("main/ui/user/createBooking.fxml");
             }
         } else {
             singleton.setDate(dateField.getValue());

@@ -41,7 +41,7 @@
                   <Image url="@../img/backButton.png" />
                </image>
             </ImageView>
-            <Label fx:id="errorMessage" layoutX="8.0" layoutY="903.0" prefHeight="54.0" prefWidth="652.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="622.0" AnchorPane.topAnchor="903.0">
+            <Label fx:id="responseMessage" layoutX="8.0" layoutY="877.0" prefHeight="54.0" prefWidth="652.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="622.0" AnchorPane.topAnchor="877.0">
                <font>
                   <Font size="23.0" />
                </font>
@@ -134,7 +134,7 @@
                   <Font name="SansSerif Regular" size="21.0" />
                </font>
             </TextField>
-            <Button fx:id="submitButton" layoutX="807.0" layoutY="849.0" mnemonicParsing="false" onAction="#submit" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Submit" textFill="WHITE">
+            <Button fx:id="submitButton" layoutX="807.0" layoutY="882.0" mnemonicParsing="false" onAction="#submit" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Submit" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="17.0" />
                </font>

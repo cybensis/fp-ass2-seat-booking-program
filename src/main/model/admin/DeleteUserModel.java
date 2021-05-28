@@ -42,6 +42,10 @@ public class DeleteUserModel {
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, employeeID);
             preparedStatement.executeUpdate();
+            query = "DELETE FROM userBookings WHERE employeeID = ?";
+            preparedStatement = singleton.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, employeeID);
+            preparedStatement.executeUpdate();
             return "success";
             // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
         }

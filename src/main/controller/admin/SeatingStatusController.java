@@ -61,8 +61,8 @@ public class SeatingStatusController {
         else if (dropdownBox.getValue().equals("Normal"))
             response = seatingStatusModel.setSeatingStatus(singleton.getDate(), dropdownBox.getValue());
 
-        this.responseMessage.setVisible(true);
-        this.responseMessage.setText(response);
+        responseMessage.setVisible(true);
+        responseMessage.setText(response);
 
     }
 

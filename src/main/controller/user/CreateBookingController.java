@@ -24,12 +24,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CreateBookingController {
-    static final int NEIGHBOR_DESK_OFFSET = 1;
+    private static final int NEIGHBOR_DESK_OFFSET = 1;
 
     private Singleton singleton = Singleton.getInstance();
     private CreateBookingModel createBookingModel = new CreateBookingModel();
     private Rectangle[] rectangleContainer;
-    ArrayList<Integer> tablesBooked;
+    private ArrayList<Integer> tablesBooked;
 
     @FXML
     private Button accept;
@@ -48,13 +48,20 @@ public class CreateBookingController {
 
     @FXML
     private void initialize() throws SQLException, IOException {
-        this.rectangleContainer = new Rectangle[]{seat_0, seat_1, seat_2, seat_3, seat_4, seat_5, seat_6, seat_7, seat_8, seat_9, seat_10, seat_11, seat_12, seat_13, seat_14, seat_15};
+        rectangleContainer = new Rectangle[]{seat_0, seat_1, seat_2, seat_3, seat_4, seat_5, seat_6, seat_7, seat_8, seat_9, seat_10, seat_11, seat_12, seat_13, seat_14, seat_15};
         LocalDate chosenDate = singleton.getDate();
-        sceneHeader.setText("Create a new booking - " + chosenDate);
+        if (singleton.getUpdateBooking())
+            sceneHeader.setText("Update booking - " + chosenDate);
+        else
+            sceneHeader.setText("Create a new booking - " + chosenDate);
         String seatingStatus = createBookingModel.getSeatingStatus(chosenDate);
-        int previousAndFutureBookedSeat[] = createBookingModel.getBlockedDesks(singleton.getUser());
+        int pastAndFutureBookedSeat[] = createBookingModel.getBlockedDesks(singleton.getUser());
+        tablesBooked = createBookingModel.blacklistedDesks(chosenDate, singleton.getUser());
+        if (seatingStatus.equals("Error") || pastAndFutureBookedSeat == null || tablesBooked == null) {
+            sceneHeader.setText("An unexpected error has occurred, please try again");
+            return;
+        }
         createDeskClickEvent();
-        this.tablesBooked = createBookingModel.blacklistedDesks(chosenDate, singleton.getUser());
         int deskID;
         if (seatingStatus.equals("COVID Conditions")) {
             for (int i = 0; i < tablesBooked.size(); i++) {
@@ -80,7 +87,7 @@ public class CreateBookingController {
                 disableSeat(tablesBooked.get(i), "booked");
             }
         // This blocks the most recent seat the user booked, both in the past and future.
-        for (int desk : previousAndFutureBookedSeat) {
+        for (int desk : pastAndFutureBookedSeat) {
             if (desk >= 0)
                 disableSeat(desk, "covid");
         }
@@ -88,9 +95,9 @@ public class CreateBookingController {
 
 
     private void createDeskClickEvent() {
-        for (int i = 0; i < this.rectangleContainer.length; i++) {
+        for (int i = 0; i < rectangleContainer.length; i++) {
             int deskID = i;
-            this.rectangleContainer[i].setOnMouseClicked(event -> {
+            rectangleContainer[i].setOnMouseClicked(event -> {
                 singleton.setChosenDesk(deskID);
                 Node source = (Node) event.getSource();
                 Stage popup = new Stage();
@@ -131,7 +138,7 @@ public class CreateBookingController {
     @FXML
     private void goBack(MouseEvent event) throws IOException {
         singleton.setUpdateBooking(false);
-        singleton.changeScene("main/ui/user/chooseDate.fxml");
+        singleton.changeScene("main/ui/user/userHome.fxml");
 
     }
 

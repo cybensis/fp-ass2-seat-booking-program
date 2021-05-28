@@ -1,10 +1,10 @@
 package main.controller.admin;
 
 public class BookingTableRow {
-    private String employeeID;
-    private String fullName;
-    private String deskID;
-    private String date;
+    private final String employeeID;
+    private final String fullName;
+    private final String deskID;
+    private final String date;
 
     public BookingTableRow(String employeeID, String fullName, String deskID, String date) {
         this.employeeID = employeeID;

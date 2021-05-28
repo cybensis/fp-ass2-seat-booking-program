@@ -34,12 +34,24 @@ public class DownloadReportController {
     private Text successMessage;
 
     @FXML
+    private void initialize() {
+        if (singleton.getAdminDateType().equals("generateReports"))
+            subHeader.setText("Generate reports for bookings on " + singleton.getDate());
+    }
+
+    @FXML
     private void download(MouseEvent event) throws SQLException, IOException {
-        // This means a date was chosen, and a date is only chosen if the user is generating reports for bookings
         String reportData[];
+        successMessage.setVisible(false);
         FileWriter writer = new FileWriter("temp.csv");
+        // This means a date was chosen, and a date is only chosen if the user is generating reports for bookings
         if (singleton.getAdminDateType().equals("generateReports")) {
             reportData = downloadReportModel.getBookingData(singleton.getDate());
+            if (reportData == null) {
+                errorMessage.setText("An unexpected error has occurred");
+                errorMessage.setVisible(true);
+                return;
+            }
             writer.write("Desk ID, Employee ID, Date, State" + System.getProperty("line.separator"));
             for (int i = 0; i < reportData.length; i++) {
                 writer.write(reportData[i] + System.getProperty("line.separator"));
@@ -50,6 +62,11 @@ public class DownloadReportController {
         }
         else {
             reportData = downloadReportModel.getEmployeeData();
+            if (reportData == null) {
+                errorMessage.setText("An unexpected error has occurred");
+                errorMessage.setVisible(true);
+                return;
+            }
             writer.write("First name, Surname, Password Hash, Employee ID, Secret question, Answer, Username, Employee role, Account type" + System.getProperty("line.separator"));
             for (int i = 0; i < reportData.length; i++) {
                 writer.write(reportData[i] + System.getProperty("line.separator"));
@@ -69,7 +86,7 @@ public class DownloadReportController {
         pathChooser.setFileFilter(filter);
         int returnVal = pathChooser.showSaveDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            String chosenFilePath = String.valueOf(pathChooser.getSelectedFile() ) + ".csv";
+            String chosenFilePath = pathChooser.getSelectedFile() + ".csv";
             File checkFile = new File(chosenFilePath);
             if (checkFile.exists()) {
                 errorMessage.setText("Error: You must choose a non-existing file");

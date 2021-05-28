@@ -24,13 +24,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class GraphicVisualisationController {
-    static final int NEIGHBOR_DESK_OFFSET = 1;
+    private static final int NEIGHBOR_DESK_OFFSET = 1;
 
     private Singleton singleton = Singleton.getInstance();
     // Reusing CreateBookingModel from the basic user side.
     private CreateBookingModel createBookingModel = new CreateBookingModel();
     private Rectangle[] rectangleContainer;
-    ArrayList<Integer> tablesBooked;
+    private ArrayList<Integer> tablesBooked;
 
     @FXML
     private ImageView backButton;
@@ -48,6 +48,10 @@ public class GraphicVisualisationController {
         subHeader.setText("Graphic visualisation - " + chosenDate);
         String seatingStatus = createBookingModel.getSeatingStatus(chosenDate);
         tablesBooked = createBookingModel.blacklistedDesks(chosenDate, singleton.getUser());
+        if (seatingStatus.equals("Error") || tablesBooked == null) {
+            subHeader.setText("An unexpected error has occurred, please try again");
+            return;
+        }
         int deskID;
         if (seatingStatus.equals("COVID Conditions")) {
             for (int i = 0; i < tablesBooked.size(); i++) {
@@ -85,8 +89,7 @@ public class GraphicVisualisationController {
 
     @FXML
     private void goBack(MouseEvent event) throws IOException {
-        singleton.changeScene("main/ui/user/chooseDate.fxml");
-
+        singleton.changeScene("main/ui/admin/chooseDate.fxml");
     }
 
 
