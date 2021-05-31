@@ -74,7 +74,7 @@ public class CreateBookingModel {
         ResultSet resultSet = null;
         ArrayList<Integer> tablesBooked = new ArrayList<>();
         try {
-            String query = "SELECT deskID FROM userBookings WHERE date = ? AND state = 'active';";
+            String query = "SELECT deskID FROM userBookings WHERE date = ? AND state = 1;";
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             resultSet = preparedStatement.executeQuery();
@@ -96,7 +96,7 @@ public class CreateBookingModel {
 
     public String addBooking() throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertQuery = "INSERT INTO userBookings (deskID, employeeID, date, state) VALUES (?,?,?,'review')";
+        String insertQuery = "INSERT INTO userBookings (deskID, employeeID, date, state) VALUES (?,?,?,2)";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
             preparedStatement.setInt(1, singleton.getChosenDesk());
@@ -112,14 +112,14 @@ public class CreateBookingModel {
 
     public String updateBooking() throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertQuery = "UPDATE userBookings SET deskID = ?, employeeID = ?, date = ?, state = 'review' WHERE employeeID  = ? AND date = ?";
+        String insertQuery = "UPDATE userBookings SET deskID = ?, employeeID = ?, date = ?, state = 2 WHERE employeeID  = ? AND date = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
             preparedStatement.setInt(1, singleton.getChosenDesk());
             preparedStatement.setInt(2, singleton.getUser());
             preparedStatement.setString(3, String.valueOf(singleton.getDate()));
             preparedStatement.setInt(4, singleton.getUser());
-            preparedStatement.setString(5, String.valueOf(singleton.getDate()));
+            preparedStatement.setString(5, String.valueOf(singleton.getBookingDate()));
             preparedStatement.executeUpdate();
             return "Success";
         }

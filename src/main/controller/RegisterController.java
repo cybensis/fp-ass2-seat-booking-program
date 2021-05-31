@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -59,6 +60,8 @@ public class RegisterController {
         @FXML
         private Label responseMessage;
 
+        @FXML
+        private Text popupText;
 
         @FXML
         public void submit(ActionEvent event) throws SQLException {
@@ -139,7 +142,7 @@ public class RegisterController {
 
         @FXML
         public void goHome(MouseEvent event) throws IOException {
-                Stage stage = (Stage) submitButton.getScene().getWindow();
+                Stage stage = (Stage) popupText.getScene().getWindow();
                 stage.close();
                 singleton.changeScene("main/ui/login.fxml");
         }

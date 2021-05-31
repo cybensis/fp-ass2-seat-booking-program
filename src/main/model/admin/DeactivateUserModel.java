@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DeleteUserModel {
+public class DeactivateUserModel {
     private Singleton singleton = Singleton.getInstance();
 
 
@@ -16,13 +16,13 @@ public class DeleteUserModel {
         PreparedStatement preparedStatement = null;
         String accountDetails[];
         ResultSet resultSet=null;
-        String query = "SELECT firstName, lastName, username FROM user WHERE employeeID = ?";
+        String query = "SELECT user.firstName, user.lastName, user.username, states.stateName FROM user INNER JOIN states ON user.accountState = states.stateID WHERE employeeID = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, employeeID);
             resultSet = preparedStatement.executeQuery();
             // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
-            accountDetails = new String[]{resultSet.getString("firstName") + " " + resultSet.getString("lastName"), resultSet.getString("username")};
+            accountDetails = new String[]{resultSet.getString("firstName") + " " + resultSet.getString("lastName"), resultSet.getString("username"), resultSet.getString("stateName")};
         }
         catch (SQLException error)
         {
@@ -50,6 +50,34 @@ public class DeleteUserModel {
             preparedStatement.executeUpdate();
             return "success";
             // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
+        }
+        catch (SQLException error)
+        {
+            return "error";
+        }finally {
+            if (preparedStatement != null)
+                preparedStatement.close();
+            if (resultSet != null)
+                resultSet.close();
+        }
+    }
+
+    public String changeAccountState(String currentState) throws SQLException {
+        int newState = 1;
+        if (currentState.equals("active"))
+            newState = 3;
+        else
+            newState = 1;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet=null;
+        String query = "UPDATE user SET accountState = ? WHERE employeeID = ?";
+        try {
+            preparedStatement = singleton.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, newState);
+            preparedStatement.setString(2, singleton.getAccountManagementDetails("employeeID"));
+            preparedStatement.executeUpdate();
+            return "success";
         }
         catch (SQLException error)
         {

@@ -45,6 +45,7 @@ public class ChooseDateController {
             singleton.setUpdateBooking(false);
             singleton.changeScene("main/ui/user/manageBookings.fxml");
             singleton.setDate(null);
+            singleton.setBookingDate(null);
         } else
             singleton.changeScene("main/ui/user/userHome.fxml");
 

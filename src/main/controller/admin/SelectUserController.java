@@ -29,6 +29,8 @@ public class SelectUserController {
             subHeader.setText("Choose account to update");
         else if (singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
             subHeader.setText("Choose account to delete");
+        else if (singleton.getAccountManagementDetails("accountAction").equals("deactivateAccount"))
+            subHeader.setText("Choose an account to deactivate / activate");
     }
 
     @FXML
@@ -38,8 +40,8 @@ public class SelectUserController {
             singleton.setAccountManagementDetails(String.valueOf(employeeIDField.getText().trim()), "employeeID");
             if (singleton.getAccountManagementDetails("accountAction").equals("updateAccount"))
                 singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
-            else if (singleton.getAccountManagementDetails("accountAction").equals("deleteAccount"))
-                singleton.changeScene("main/ui/admin/deleteUser.fxml");
+            else if (singleton.getAccountManagementDetails("accountAction").equals("deleteAccount") || singleton.getAccountManagementDetails("accountAction").equals("deactivateAccount"))
+                singleton.changeScene("main/ui/admin/deactivateUser.fxml");
         }
         else {
             errorText.setText(response);

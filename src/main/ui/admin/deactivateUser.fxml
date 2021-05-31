@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.admin.DeleteUserController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.admin.DeactivateUserController">
    <children>
-      <Button fx:id="deleteButton" layoutX="905.0" layoutY="474.0" mnemonicParsing="false" onMouseClicked="#deleteUser" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="905.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="474.0">
+      <Button fx:id="deleteButton" layoutX="905.0" layoutY="474.0" mnemonicParsing="false" onMouseClicked="#modifyAccount" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #2196F3;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="905.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="474.0">
          <font>
             <Font name="SansSerif Bold" size="17.0" />
          </font>
@@ -54,6 +54,11 @@
       <Text fx:id="homeNavText" fill="#2a00fc" layoutX="359.0" layoutY="559.0" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to be taken back to the home screen" underline="true" visible="false" wrappingWidth="575.4375">
          <font>
             <Font size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="stateText" layoutX="276.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State:" visible="false" wrappingWidth="683.046875">
+         <font>
+            <Font size="32.0" />
          </font>
       </Text>
    </children>

@@ -11,7 +11,7 @@
                 <Font name="SansSerif Bold" size="41.0" />
             </font>
         </Text>
-      <Text fill="#2d30e1" layoutX="74.0" layoutY="228.0" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to go back to the homepage" textAlignment="CENTER" wrappingWidth="451.099853515625">
+      <Text fx:id="popupText" fill="#2d30e1" layoutX="74.0" layoutY="228.0" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to go back to the homepage" textAlignment="CENTER" wrappingWidth="451.099853515625">
          <font>
             <Font name="SansSerif Regular" size="23.0" />
          </font>

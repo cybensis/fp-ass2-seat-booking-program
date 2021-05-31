@@ -28,6 +28,9 @@ public class Singleton {
     // Holds the date selected by the user, used in various parts of the application
     private LocalDate chosenDate;
 
+    // Holds the date of the booking that is currently being modified.
+    private LocalDate bookingDate;
+
     // viewBoookings.fxml is used for both viewing existing bookings, and viewing booking requests, this variable
     // defines which one is being used.
     private String viewBookingsType;
@@ -73,7 +76,7 @@ public class Singleton {
         sceneTitle.put("main/ui/admin/graphicVisualisation.fxml", "Admin panel - Graphic visualisation");
         sceneTitle.put("main/ui/admin/bookingManagement.fxml", "Admin panel - Booking management");
         sceneTitle.put("main/ui/admin/chooseDate.fxml", "Admin panel - Choose date");
-        sceneTitle.put("main/ui/admin/deleteUser.fxml", "Admin panel - Account management");
+        sceneTitle.put("main/ui/admin/deactivateUser.fxml", "Admin panel - Account management");
         sceneTitle.put("main/ui/admin/seatingStatus.fxml", "Admin panel - Booking management");
         sceneTitle.put("main/ui/admin/selectUser.fxml", "Admin panel - Account management");
         sceneTitle.put("main/ui/admin/viewBookings.fxml", "Admin panel - Booking management");
@@ -93,6 +96,8 @@ public class Singleton {
     public void setDate(LocalDate chosenDate) { this.chosenDate = chosenDate;}
     public LocalDate getDate() { return this.chosenDate; }
 
+    public void setBookingDate(LocalDate bookingDate) { this.bookingDate = bookingDate;}
+    public LocalDate getBookingDate() { return this.bookingDate; }
 
     public void changeScene(String filePath) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(filePath));

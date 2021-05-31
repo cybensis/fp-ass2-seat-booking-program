@@ -36,7 +36,7 @@
          </font>
       </Text>
       <Line endX="509.0355224609375" endY="4.57763671875E-5" layoutX="543.0" layoutY="130.0" startX="-300.6441345214844" startY="4.57763671875E-5" strokeWidth="5.0" />
-      <Text fx:id="subHeader" layoutX="253.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account Management - Account search" wrappingWidth="568.099853515625">
+      <Text fx:id="subHeader" layoutX="253.0" layoutY="167.2529296875" strokeType="OUTSIDE" strokeWidth="0.0" text="Account Management - Account search" wrappingWidth="802.099853515625">
          <font>
             <Font name="SansSerif Bold" size="29.0" />
          </font>

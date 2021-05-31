@@ -59,7 +59,7 @@ public class ManageBookingsController {
 
     @FXML
     private void updateBooking(MouseEvent event) throws IOException, SQLException {
-        singleton.setDate(LocalDate.parse(selectedRow.getDate()));
+        singleton.setBookingDate(LocalDate.parse(selectedRow.getDate()));
         singleton.setUpdateBooking(true);
         singleton.changeScene("main/ui/user/chooseDate.fxml");
 
@@ -114,7 +114,7 @@ public class ManageBookingsController {
         removeButton.setVisible(true);
         selectedRow = bookingTable.getSelectionModel().getSelectedItem();
         singleton.setDate(LocalDate.parse(selectedRow.getDate()));
-        if (ChronoUnit.DAYS.between(currentDate, LocalDate.parse(selectedRow.getDate())) > 2)
+        if (ChronoUnit.DAYS.between(currentDate, LocalDate.parse(selectedRow.getDate())) >= 2)
             updateButton.setVisible(true);
         else
             updateButton.setVisible(false);

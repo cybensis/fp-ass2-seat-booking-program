@@ -24,7 +24,7 @@ public class RegisterModel {
                 try {
                     preparedStatement = null;
                     resultSet = null;
-                    String insertQuery = "INSERT INTO user (firstName,lastName,password,employeeID,secretQuestion,secretQuestionAnswer,username,employeeRole, accountType) VALUES (?,?,?,?,?,?,?,?,?)";
+                    String insertQuery = "INSERT INTO user (firstName,lastName,password,employeeID,secretQuestion,secretQuestionAnswer,username,employeeRole, accountType, accountState) VALUES (?,?,?,?,?,?,?,?,?,1)";
                     preparedStatement = singleton.getConnection().prepareStatement(insertQuery);
                     preparedStatement.setString(1, newEmployee.getFirstName());
                     preparedStatement.setString(2, newEmployee.getSurname());

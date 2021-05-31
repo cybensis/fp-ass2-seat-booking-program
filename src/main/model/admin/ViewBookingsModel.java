@@ -12,20 +12,25 @@ public class ViewBookingsModel {
     private final static int TABLE_ELEMENTS = 4;
 
     public BookingTableRow[] getBookings(String state) throws SQLException {
+        int stateID = 0;
+        if (state.equals("active"))
+            stateID = 1;
+        else
+            stateID = 2;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
         String currentDate = String.valueOf(LocalDate.now());
         String query = "SELECT count(deskID) FROM userBookings WHERE date >= '" + currentDate + "' AND state = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, state);
+            preparedStatement.setInt(1, stateID);
             resultSet = preparedStatement.executeQuery();
             int returnedRows = 0;
             if (resultSet.next())
                     returnedRows = resultSet.getInt("count(deskID)");
             query = "SELECT user.employeeID, user.firstName, user.lastName, userBookings.deskID, userBookings.date FROM userBookings INNER JOIN user ON userBookings.employeeID = user.employeeID WHERE date >= '" + currentDate + "' AND state = ?";
             preparedStatement = singleton.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, state);
+            preparedStatement.setInt(1, stateID);
             resultSet = preparedStatement.executeQuery();
             if (returnedRows > 0) {
                 BookingTableRow bookingTableRow[] = new BookingTableRow[returnedRows];
@@ -56,7 +61,7 @@ public class ViewBookingsModel {
     public String acceptBooking() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
-        String query = "UPDATE userBookings SET state = 'active' WHERE date = ? AND employeeID = ? AND state = 'review'";
+        String query = "UPDATE userBookings SET state = 1 WHERE date = ? AND employeeID = ? AND state = 2";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, String.valueOf(singleton.getDate()));

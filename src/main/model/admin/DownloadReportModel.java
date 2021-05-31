@@ -20,13 +20,13 @@ public class DownloadReportModel {
             preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             rs = preparedStatement.executeQuery();
             bookingData = new String[rs.getInt("count(*)")];
-            query = "SELECT * FROM userBookings WHERE date >= ?";
+            query = "SELECT * FROM userBookings INNER JOIN states ON userBookings.state = states.stateID WHERE date >= ?";
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, String.valueOf(singleton.getDate()));
             rs = preparedStatement.executeQuery();
             int i = 0;
             while (rs.next()) {
-                bookingData[i] = rs.getString("deskID") + "," + rs.getString("employeeID") + "," + rs.getString("date") + "," + rs.getString("state");
+                bookingData[i] = rs.getString("deskID") + "," + rs.getString("employeeID") + "," + rs.getString("date") + "," + rs.getString("stateName");
                 i++;
             }
             return bookingData;
@@ -54,12 +54,13 @@ public class DownloadReportModel {
             preparedStatement = singleton.getConnection().prepareStatement(query);
             rs = preparedStatement.executeQuery();
             employeeData = new String[rs.getInt("count(*)")];
-            query = "SELECT * FROM user;";
+            query = "SELECT * FROM user INNER JOIN states ON user.accountState = states.stateID;";
             preparedStatement = singleton.getConnection().prepareStatement(query);
             rs = preparedStatement.executeQuery();
             int i = 0;
             while (rs.next()) {
-                employeeData[i] = rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3) + "," + rs.getString(4) + "," + rs.getString(5) + "," + rs.getString(6) + "," + rs.getString(7) + "," + rs.getString(8) + "," + rs.getString(9);
+                // I skip 10 and 11, because this selects all from both tables, I only want the name of the accounts state, which columns 10 and 11 only holds the id
+                employeeData[i] = rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3) + "," + rs.getString(4) + "," + rs.getString(5) + "," + rs.getString(6) + "," + rs.getString(7) + "," + rs.getString(8) + "," + rs.getString(9) + "," + rs.getString(12);
                 i++;
             }
             return employeeData;

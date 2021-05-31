@@ -30,6 +30,13 @@ public class AccountManagementController {
     private Text dotThree;
 
     @FXML
+    private Text dotFour;
+
+    @FXML
+    private Text dotPointFour;
+
+
+    @FXML
     private void initialize() {
         if (!singleton.getAccountManagementDetails("accountType").equals(""))
             updateDotPoints(singleton.getAccountManagementDetails("accountType"));
@@ -66,8 +73,19 @@ public class AccountManagementController {
         dotThree.setVisible(true);
         if (accountType.equals("admin"))
             subHeader.setText("Account Management - Admin");
-        else if (accountType.equals("employee"))
+        else if (accountType.equals("employee")) {
             subHeader.setText("Account Management - Employees");
+            dotPointFour.setVisible(true);
+            dotPointFour.setVisible(true);
+            dotPointFour.setOnMouseClicked(event -> {
+                singleton.setAccountManagementDetails("deactivateAccount", "accountAction");
+                try {
+                    singleton.changeScene("main/ui/admin/selectUser.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
 
         dotPointOne.setText("Add new account");
         dotPointOne.setOnMouseClicked(event -> {

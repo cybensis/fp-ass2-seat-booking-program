@@ -54,7 +54,9 @@ public class LoginController implements Initializable {
         try {
             //atemptLogin is set to either false, meaning the login failed, or is set to the users account type
             String attemptLogin = loginModel.isLogin(txtUsername.getText().trim(),txtPassword.getText().trim());
-            if (!attemptLogin.equals("false")){
+            if (attemptLogin.equals("deactivated"))
+                isConnected.setText("Sorry, your account is currently deactivated");
+            else if (!attemptLogin.equals("false")){
                 if (attemptLogin.equals("employee"))
                     singleton.changeScene("main/ui/user/userHome.fxml");
                 else if (attemptLogin.equals("admin"))

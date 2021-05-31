@@ -110,14 +110,14 @@ public class AddUpdateAccountController {
             response = addNewUser();
         else if (singleton.getAccountManagementDetails("accountAction").equals("updateAccount")) {
             response = updateUser();
-            System.out.println("TEST");
         }
 
         if (response.equals("Success")) {
+            createPopup(event);
             singleton.setAccountManagementDetails("", "employeeID");
             singleton.setAccountManagementDetails("", "accountType");
             singleton.setAccountManagementDetails("", "accountAction");
-            createPopup(event);
+
         }
         else {
             responseMessage.setVisible(true);

@@ -47,6 +47,7 @@ public class CreateBookingPopupController {
             submittedAlready = true;
             singleton.setChosenDesk(-1);
             singleton.setDate(null);
+            singleton.setBookingDate(null);
             if (!response.equals("Success"))
                 popupText.setText("Sorry, an unexpected error occurred");
             else

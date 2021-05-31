@@ -26,7 +26,7 @@ public class ManageBookingsModel {
             int returnedRows = 0;
             if (resultSet.next())
                 returnedRows = resultSet.getInt("count(*)");
-            query = "SELECT deskID, date, state FROM userBookings WHERE date >= '" + currentDate + "' AND employeeID = ?";
+            query = "SELECT userBookings.deskID, userBookings.date, states.stateName FROM userBookings INNER JOIN states ON userBookings.state = states.stateID WHERE date >= '" + currentDate + "' AND employeeID = ?";
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, singleton.getUser());
             resultSet = preparedStatement.executeQuery();
@@ -34,7 +34,7 @@ public class ManageBookingsModel {
                 ManageBookingTableRow bookingTableRow[] = new ManageBookingTableRow[returnedRows];
                 int i = 0;
                 while (resultSet.next()) {
-                    bookingTableRow[i] = new ManageBookingTableRow(resultSet.getString("state"),resultSet.getString("deskID"), resultSet.getString("date"));
+                    bookingTableRow[i] = new ManageBookingTableRow(resultSet.getString("stateName"),resultSet.getString("deskID"), resultSet.getString("date"));
                     i++;
                 }
                 if (i == 0)

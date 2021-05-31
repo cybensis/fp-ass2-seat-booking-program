@@ -64,7 +64,7 @@ public class DownloadReportController {
                 errorMessage.setVisible(true);
                 return;
             }
-            writer.write("First name, Surname, Password Hash, Employee ID, Secret question, Answer, Username, Employee role, Account type" + System.getProperty("line.separator"));
+            writer.write("First name, Surname, Password Hash, Employee ID, Secret question, Answer, Username, Employee role, Account type, Account state" + System.getProperty("line.separator"));
             for (int i = 0; i < reportData.length; i++) {
                 writer.write(reportData[i] + System.getProperty("line.separator"));
             }
