@@ -20,7 +20,7 @@ public class LoginModel {
         }
     }
 
-    public String isLogin(String user, String pass) throws SQLException {
+    public String attemptLogin(String user, String pass) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String query = "SELECT states.stateName FROM user INNER JOIN states ON user.accountState = states.stateID WHERE user.username = ?";
@@ -31,8 +31,7 @@ public class LoginModel {
             if (resultSet.next()) {
                 if (resultSet.getString("stateName").equals("deactivated"))
                     return "deactivated";
-            }
-            else
+            } else
                 return "false";
 
             query = "SELECT user.password, accountTypes.accountType, user.employeeID FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.username = ?";

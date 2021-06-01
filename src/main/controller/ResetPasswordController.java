@@ -68,20 +68,20 @@ public class ResetPasswordController {
     @FXML
     private PasswordField passwordField;
 
+    // This page is reused a lot, to prevent the need for a new file for each section of reset password
     @FXML
     private void submit(MouseEvent event) throws SQLException {
         if (currentScene.equals("enterUsername")) {
             retrieveUserSQ();
-        }
-        else if (currentScene.equals("secretQuestion")) {
+        } else if (currentScene.equals("secretQuestion")) {
             checkSQAnswer();
-        }
-        else if (currentScene.equals("newPassword")) {
+        } else if (currentScene.equals("newPassword")) {
             changePassword();
         }
 
     }
 
+    // This method is ran when the user has got their secret question correct, and has submitted their new password
     private void changePassword() throws SQLException {
         if (passwordField.getText().trim().isEmpty() || passwordField.getText().trim().length() < 5) {
             errorText.setText("Please make sure your password is greater than 5 characters");
@@ -92,8 +92,7 @@ public class ResetPasswordController {
         if (!message.equals("Success")) {
             errorText.setText("An error occurred, please try again");
             errorText.setVisible(true);
-        }
-        else {
+        } else {
             errorText.setVisible(false);
             textField.setVisible(false);
             textAboveField.setVisible(false);
@@ -110,6 +109,7 @@ public class ResetPasswordController {
 
     }
 
+    // This checks that the users secret question answer is correct or not
     private void checkSQAnswer() {
         String answer;
         if (textField.getText().trim().isEmpty()) {
@@ -127,13 +127,13 @@ public class ResetPasswordController {
             passwordField.setVisible(true);
             secretQuestionHeader.setVisible(false);
             currentScene = "newPassword";
-        }
-        else {
+        } else {
             errorText.setVisible(true);
             errorText.setText("What you wrote does not match your answer");
         }
     }
 
+    // This asks for the users username, then uses that to retrieve their secret question.
     private void retrieveUserSQ() throws SQLException {
         String username;
         username = textField.getText().trim();
@@ -146,12 +146,10 @@ public class ResetPasswordController {
         if (secretQuestionDetails[0].equals("noAccount")) {
             errorText.setText("No account was found with this username");
             errorText.setVisible(true);
-        }
-        else if (secretQuestionDetails[0].equals("error")) {
+        } else if (secretQuestionDetails[0].equals("error")) {
             errorText.setText("An error occurred, please try again");
             errorText.setVisible(true);
-        }
-        else {
+        } else {
             errorText.setVisible(false);
             textAboveField.setVisible(false);
             secretQuestion.setVisible(true);

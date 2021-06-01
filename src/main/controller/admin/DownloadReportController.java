@@ -43,6 +43,7 @@ public class DownloadReportController {
         FileWriter writer = new FileWriter("temp.csv");
         // This means a date was chosen, and a date is only chosen if the user is generating reports for bookings
         if (singleton.getAdminDateType().equals("generateReports")) {
+            // This if block generates the CSV file and its data.
             reportData = downloadReportModel.getBookingData();
             if (reportData == null) {
                 errorMessage.setText("An unexpected error has occurred");
@@ -56,8 +57,7 @@ public class DownloadReportController {
             writer.flush();
             writer.close();
 
-        }
-        else {
+        } else {
             reportData = downloadReportModel.getEmployeeData();
             if (reportData == null) {
                 errorMessage.setText("An unexpected error has occurred");
@@ -75,7 +75,8 @@ public class DownloadReportController {
 
     }
 
-
+    // saveFile confirms that the user selects a proper filepath to save the CSV file, so it doesn't overwrite any
+    // files, and that the program has access to the chosen folder.
     private void saveFile() {
         JFileChooser pathChooser = new JFileChooser();
         pathChooser.setDialogTitle("Specify a file to save");
@@ -93,8 +94,7 @@ public class DownloadReportController {
             }
             File tempFile = new File("temp.csv");
             tempFile.renameTo(new File(chosenFilePath));
-        }
-        else {
+        } else {
             errorMessage.setText("Error: An unexpected error occurred, please try a different directory");
             successMessage.setVisible(false);
             errorMessage.setVisible(true);

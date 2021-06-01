@@ -11,6 +11,9 @@ public class ViewBookingsModel {
     private Singleton singleton = Singleton.getInstance();
     private final static int TABLE_ELEMENTS = 4;
 
+    // This method starts by getting the count of active bookings for a specific date, then initialising an array with
+    // that number, then doing another query to return the actual data for each booking, and filling the array with said
+    // data.
     public BookingTableRow[] getBookings(String state) throws SQLException {
         int stateID = 0;
         if (state.equals("active"))
@@ -43,7 +46,7 @@ public class ViewBookingsModel {
             }
             else
                 return new BookingTableRow[]{null};
-            // In ViewBookingsController, I check if this function returns null to check for errors, but having not
+            // In ViewBookingsController, I check if this method returns null to check for errors, but having no
             // booking requests would also be null, but having a null array element is very different to having a
             // null array, so I use this to distinguish between an error and no booking requests.
         }
@@ -58,6 +61,7 @@ public class ViewBookingsModel {
         }
     }
 
+    // This is used by admins to accept bookings, by changing the state from 3 (review) to 1 (active).
     public String acceptBooking() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;
@@ -80,6 +84,7 @@ public class ViewBookingsModel {
         }
     }
 
+    // This is used by admins and basic employees to remove bookings
     public String removeBooking() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet=null;

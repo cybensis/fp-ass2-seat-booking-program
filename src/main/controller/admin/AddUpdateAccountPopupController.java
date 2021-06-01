@@ -24,6 +24,7 @@ public class AddUpdateAccountPopupController {
         else if (singleton.getAccountManagementDetails("accountAction").equals("addAccount"))
             mainHeader.setText("This account has successfully been added");
     }
+
     @FXML
     private void goHome(MouseEvent event) throws IOException {
         singleton.changeScene("main/ui/admin/adminHome.fxml");

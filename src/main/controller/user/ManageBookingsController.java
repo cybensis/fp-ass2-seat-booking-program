@@ -58,6 +58,28 @@ public class ManageBookingsController {
     private TableColumn<ManageBookingTableRow, String> dateColumn;
 
     @FXML
+    private void initialize() throws SQLException {
+        if (!singleton.getHasClearedBookings()) {
+            manageBookingsModel.deleteOldEntries();
+            singleton.setHasClearedBookings(true);
+        }
+        ManageBookingTableRow userBookings[] = manageBookingsModel.getUserBookings();
+        deskIDColumn.setCellValueFactory(new PropertyValueFactory<>("deskID"));
+        stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        bookingTable.selectionModelProperty().addListener((Observable observable) -> {
+            int index = bookingTable.getSelectionModel().getSelectedIndex();
+            ManageBookingTableRow row = bookingTable.getItems().get(index);
+        });
+        if (userBookings != null) {
+            for (int i = 0; i < userBookings.length; i++) {
+                bookingTable.getItems().add(userBookings[i]);
+            }
+        }
+    }
+
+
+    @FXML
     private void updateBooking(MouseEvent event) throws IOException, SQLException {
         singleton.setBookingDate(LocalDate.parse(selectedRow.getDate()));
         singleton.setUpdateBooking(true);
@@ -70,6 +92,8 @@ public class ManageBookingsController {
         singleton.changeScene("main/ui/user/userHome.fxml");
     }
 
+
+    // This creates a popup window to ensure the user wants to delete a booking.
     @FXML
     private void deleteBooking(MouseEvent event) throws SQLException {
         Node source = (Node) event.getSource();
@@ -98,12 +122,12 @@ public class ManageBookingsController {
         });
     }
 
+    // This method is ran everytime a user selects a row.
     @FXML
     private void selectRow(MouseEvent event) {
         try {
             String testForNull = bookingTable.getSelectionModel().getSelectedItem().getDate();
-        }
-        catch (NullPointerException error) {
+        } catch (NullPointerException error) {
             removeButton.setVisible(false);
             updateButton.setVisible(false);
             selectedRow = null;
@@ -118,29 +142,6 @@ public class ManageBookingsController {
             updateButton.setVisible(true);
         else
             updateButton.setVisible(false);
-    }
-
-
-
-    @FXML
-    private void initialize() throws SQLException {
-        if (!singleton.getHasClearedBookings()) {
-            manageBookingsModel.deleteOldEntries();
-            singleton.setHasClearedBookings(true);
-        }
-        ManageBookingTableRow userBookings[] = manageBookingsModel.getUserBookings();
-        deskIDColumn.setCellValueFactory(new PropertyValueFactory<>("deskID"));
-        stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        bookingTable.selectionModelProperty().addListener((Observable observable) -> {
-            int index = bookingTable.getSelectionModel().getSelectedIndex();
-            ManageBookingTableRow row = bookingTable.getItems().get(index);
-        });
-        if (userBookings != null) {
-            for (int i = 0; i < userBookings.length; i++) {
-                bookingTable.getItems().add(userBookings[i]);
-            }
-        }
     }
 
 }

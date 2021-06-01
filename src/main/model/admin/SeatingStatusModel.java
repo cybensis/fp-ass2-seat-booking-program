@@ -9,6 +9,8 @@ import java.sql.SQLException;
 public class SeatingStatusModel {
     private Singleton singleton = Singleton.getInstance();
 
+    // This gets the seatings status for the selected date, either normal, lockdown or covid conditions, and if the
+    // query returns nothing, then that means it is normal.
     public String getSeatingStatus() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -32,6 +34,8 @@ public class SeatingStatusModel {
         }
     }
 
+    // This checks for bookings on the selected date as the admin cannot change the seating status if the date has
+    // bookings (unless changing the status to normal since nothing is blocked in normal conditions).
     public boolean checkForBookings() throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -55,12 +59,13 @@ public class SeatingStatusModel {
         }
     }
 
+    // This sets the seating status for the selected date.
     public String setSeatingStatus(String status) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
             int conditionID = getStatusID(status);
             if (conditionID == 0)
-                return "An error occurrred";
+                return "An error occurred";
             String checkAlreadyBooked = "INSERT INTO dateConditions (date, condition)  VALUES (?,?);";
             preparedStatement = singleton.getConnection().prepareStatement(checkAlreadyBooked);
             preparedStatement.setString(1, String.valueOf(singleton.getDate()));
@@ -75,6 +80,7 @@ public class SeatingStatusModel {
         }
     }
 
+    // Gets the ID of the status, as the system only knows the actual string name.
     public int getStatusID(String statusName) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -96,7 +102,6 @@ public class SeatingStatusModel {
                 resultSet.close();
         }
     }
-
 
 
 }

@@ -53,8 +53,7 @@ public class SeatingStatusController {
             responseMessage.setVisible(true);
             responseMessage.setText("This date already has bookings, please delete them before changing the status");
             return;
-        }
-        else if (dropdownBox.getValue().equals("COVID Conditions") || dropdownBox.getValue().equals("Lockdown") || dropdownBox.getValue().equals("Normal"))
+        } else if (dropdownBox.getValue().equals("COVID Conditions") || dropdownBox.getValue().equals("Lockdown") || dropdownBox.getValue().equals("Normal"))
             response = seatingStatusModel.setSeatingStatus(dropdownBox.getValue());
 
         responseMessage.setVisible(true);

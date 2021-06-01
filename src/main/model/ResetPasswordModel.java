@@ -1,9 +1,11 @@
 package main.model;
 
 import main.BCrypt;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import main.Singleton;
 
 public class ResetPasswordModel {
@@ -14,7 +16,7 @@ public class ResetPasswordModel {
     public String changePassword(String password) throws SQLException {
         PreparedStatement preparedStatement = null;
         String query = "UPDATE user SET password = ? WHERE employeeID = ?";
-        String passwordHash = BCrypt.hashpw(password,BCrypt.gensalt());
+        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
             preparedStatement.setString(1, passwordHash);
@@ -23,8 +25,7 @@ public class ResetPasswordModel {
             return "Success";
         } catch (Exception e) {
             return "error";
-        }
-        finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
         }
@@ -42,19 +43,17 @@ public class ResetPasswordModel {
             if (resultSet.next()) {
                 secretQuestion[0] = resultSet.getString("secretQuestion");
                 secretQuestion[1] = resultSet.getString("secretQuestionAnswer");
-            }
-            else
-            secretQuestion[0] = "noAccount";
+            } else
+                secretQuestion[0] = "noAccount";
         } catch (Exception e) {
             secretQuestion[0] = "error";
+        } finally {
+            if (preparedStatement != null)
+                preparedStatement.close();
+            if (resultSet != null)
+                resultSet.close();
+            return secretQuestion;
         }
-    finally {
-        if (preparedStatement != null)
-            preparedStatement.close();
-        if (resultSet != null)
-            resultSet.close();
-        return secretQuestion;
-    }
     }
 
 }

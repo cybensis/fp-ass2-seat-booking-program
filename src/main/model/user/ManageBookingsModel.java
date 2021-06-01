@@ -3,6 +3,7 @@ package main.model.user;
 
 import main.Singleton;
 import main.controller.user.ManageBookingTableRow;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class ManageBookingsModel {
     // Gets all bookings for the current user, starting from the current date, and returns an array of booking objects.
     public ManageBookingTableRow[] getUserBookings() throws SQLException {
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet=null;
+        ResultSet resultSet = null;
         String currentDate = String.valueOf(LocalDate.now());
         String query = "SELECT count(*) FROM userBookings WHERE date >= '" + currentDate + "' AND employeeID = ?";
         try {
@@ -34,21 +35,18 @@ public class ManageBookingsModel {
                 ManageBookingTableRow bookingTableRow[] = new ManageBookingTableRow[returnedRows];
                 int i = 0;
                 while (resultSet.next()) {
-                    bookingTableRow[i] = new ManageBookingTableRow(resultSet.getString("stateName"),resultSet.getString("deskID"), resultSet.getString("date"));
+                    bookingTableRow[i] = new ManageBookingTableRow(resultSet.getString("stateName"), resultSet.getString("deskID"), resultSet.getString("date"));
                     i++;
                 }
                 if (i == 0)
                     return null;
                 else
                     return bookingTableRow;
-            }
-            else
+            } else
                 return null;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return null;
-        }finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
             if (resultSet != null)
@@ -66,17 +64,15 @@ public class ManageBookingsModel {
             preparedStatement.setInt(1, singleton.getUser());
             preparedStatement.setString(2, String.valueOf(date));
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException error) {
+        } catch (SQLException error) {
             error.printStackTrace();
-        }
-        finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
         }
     }
 
-
+    // This checks if the user already has a booking on the selected date.
     public String alreadyBooked(LocalDate date) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -100,6 +96,10 @@ public class ManageBookingsModel {
         return "noBookings";
     }
 
+
+    // When the user logs in and enters the Manage bookings page, once and only once, this method is ran to clear up the
+    // database, as it deletes all old entries THAT WERE NOT ACCEPTED, and only for the logged in user, since the
+    // bookings that weren't accepted aren't needed.
     public void deleteOldEntries() throws SQLException {
         PreparedStatement preparedStatement = null;
         String tomorrowDate = String.valueOf(LocalDate.now().plusDays(1));
@@ -109,11 +109,9 @@ public class ManageBookingsModel {
             preparedStatement.setInt(1, singleton.getUser());
             preparedStatement.setString(2, tomorrowDate);
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException error) {
+        } catch (SQLException error) {
             error.printStackTrace();
-        }
-        finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
         }

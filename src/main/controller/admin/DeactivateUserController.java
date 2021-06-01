@@ -70,9 +70,10 @@ public class DeactivateUserController {
             subHeader.setText("Delete " + singleton.getAccountManagementDetails("accountType") + " account");
         else if (singleton.getAccountManagementDetails("accountAction").equals("deactivateAccount")) {
             subHeader.setText("Deactivate " + singleton.getAccountManagementDetails("accountType") + " account");
-            //Index 2 = the accounts current state
             stateText.setVisible(true);
+            //Index 2 = the accounts current state
             stateText.setText("Current state: " + accountDetails[2]);
+            // If the current state is active, then the admin is prompted to deactivate it, and vice versa.
             if (accountDetails[2].equals("active")) {
                 subHeader.setText("Deactivate " + singleton.getAccountManagementDetails("accountType") + " account");
                 deleteButton.setText("Deactivate");
@@ -90,8 +91,7 @@ public class DeactivateUserController {
         if (singleton.getAccountManagementDetails("accountAction").equals("deleteAccount")) {
             response = deactivateUserModel.deleteUser(singleton.getAccountManagementDetails("employeeID"));
             headerText.setText("Account deleted");
-        }
-        else if (singleton.getAccountManagementDetails("accountAction").equals("deactivateAccount")) {
+        } else if (singleton.getAccountManagementDetails("accountAction").equals("deactivateAccount")) {
             response = deactivateUserModel.changeAccountState(accountDetails[2]);
             headerText.setText("Account state updated");
         }

@@ -48,8 +48,7 @@ public class AccountManagementController {
         if (!singleton.getAccountManagementDetails("accountType").equals("")) {
             singleton.setAccountManagementDetails("", "accountType");
             singleton.changeScene("main/ui/admin/accountManagement.fxml");
-        }
-        else
+        } else
             singleton.changeScene("main/ui/admin/adminHome.fxml");
 
     }
@@ -68,6 +67,7 @@ public class AccountManagementController {
         updateDotPoints("employee");
     }
 
+    // This scene displays multiple different "Pages" to prevent creating more scenes unnecessarily.
     private void updateDotPoints(String accountType) {
         dotPointThree.setVisible(true);
         dotThree.setVisible(true);

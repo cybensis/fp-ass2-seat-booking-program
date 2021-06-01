@@ -11,11 +11,11 @@ import java.sql.SQLException;
 public class DeactivateUserModel {
     private Singleton singleton = Singleton.getInstance();
 
-
+    // This retrieves the details for the selected user
     public String[] returnUserDetails(String employeeID) throws SQLException {
         PreparedStatement preparedStatement = null;
         String accountDetails[];
-        ResultSet resultSet=null;
+        ResultSet resultSet = null;
         String query = "SELECT user.firstName, user.lastName, user.username, states.stateName FROM user INNER JOIN states ON user.accountState = states.stateID WHERE employeeID = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
@@ -23,11 +23,9 @@ public class DeactivateUserModel {
             resultSet = preparedStatement.executeQuery();
             // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
             accountDetails = new String[]{resultSet.getString("firstName") + " " + resultSet.getString("lastName"), resultSet.getString("username"), resultSet.getString("stateName")};
-        }
-        catch (SQLException error)
-        {
+        } catch (SQLException error) {
             accountDetails = new String[]{"error"};
-        }finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
             if (resultSet != null)
@@ -36,9 +34,10 @@ public class DeactivateUserModel {
         return accountDetails;
     }
 
+
     public String deleteUser(String employeeID) throws SQLException {
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet=null;
+        ResultSet resultSet = null;
         String query = "DELETE FROM user WHERE employeeID = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
@@ -50,11 +49,9 @@ public class DeactivateUserModel {
             preparedStatement.executeUpdate();
             return "success";
             // The employee ID was verified in selectUser.fxml, so we don't need to check if the user exists.
-        }
-        catch (SQLException error)
-        {
+        } catch (SQLException error) {
             return "error";
-        }finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
             if (resultSet != null)
@@ -62,6 +59,7 @@ public class DeactivateUserModel {
         }
     }
 
+    // This changes the accounts state from either active to deactivated or vice versa.
     public String changeAccountState(String currentState) throws SQLException {
         int newState = 1;
         if (currentState.equals("active"))
@@ -70,7 +68,7 @@ public class DeactivateUserModel {
             newState = 1;
 
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet=null;
+        ResultSet resultSet = null;
         String query = "UPDATE user SET accountState = ? WHERE employeeID = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
@@ -78,11 +76,9 @@ public class DeactivateUserModel {
             preparedStatement.setString(2, singleton.getAccountManagementDetails("employeeID"));
             preparedStatement.executeUpdate();
             return "success";
-        }
-        catch (SQLException error)
-        {
+        } catch (SQLException error) {
             return "error";
-        }finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
             if (resultSet != null)

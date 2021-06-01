@@ -9,10 +9,12 @@ import java.sql.SQLException;
 public class DownloadReportModel {
     private Singleton singleton = Singleton.getInstance();
 
+    // If the admin wants to generate a CSV for all bookings for a specified date, this method returns that data in
+    // the form of a String array, where each index, is a single row in the CSV file.
     public String[] getBookingData() throws SQLException {
         PreparedStatement preparedStatement = null;
         // Naming this rs to make the array assignment shorter and more readable.
-        ResultSet rs=null;
+        ResultSet rs = null;
         String bookingData[];
         String query = "SELECT count(*) FROM userBookings WHERE date >= ?";
         try {
@@ -30,12 +32,10 @@ public class DownloadReportModel {
                 i++;
             }
             return bookingData;
-        }
-        catch (SQLException error)
-        {
+        } catch (SQLException error) {
             bookingData = null;
             return bookingData;
-        }finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
             if (rs != null)
@@ -43,11 +43,12 @@ public class DownloadReportModel {
         }
     }
 
-
+    // If the admin chooses to generate reports for all employees this returns all employee data as a String array,
+    // where each index holds a row for the CSV file.
     public String[] getEmployeeData() throws SQLException {
         PreparedStatement preparedStatement = null;
         // Naming this rs to make the array assignment shorter and more readable.
-        ResultSet rs=null;
+        ResultSet rs = null;
         String employeeData[];
         String query = "SELECT count(*) FROM user;";
         try {
@@ -64,12 +65,10 @@ public class DownloadReportModel {
                 i++;
             }
             return employeeData;
-        }
-        catch (SQLException error)
-        {
+        } catch (SQLException error) {
             employeeData = null;
             return employeeData;
-        }finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
             if (rs != null)

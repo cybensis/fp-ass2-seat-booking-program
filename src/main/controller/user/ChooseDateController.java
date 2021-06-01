@@ -77,8 +77,7 @@ public class ChooseDateController {
             if (ChronoUnit.DAYS.between(LocalDate.now(), dateField.getValue()) < 2) {
                 errorMessage.setText("Error: New date must be at least 2 days from today");
                 errorMessage.setVisible(true);
-            }
-            else {
+            } else {
                 singleton.setDate(dateField.getValue());
                 singleton.changeScene("main/ui/user/createBooking.fxml");
             }

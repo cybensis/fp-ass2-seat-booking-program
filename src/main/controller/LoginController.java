@@ -1,13 +1,11 @@
 package main.controller;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.WindowEvent;
 import main.Singleton;
 import main.model.LoginModel;
 
@@ -30,13 +28,12 @@ public class LoginController implements Initializable {
     private Text registerAccount;
 
 
-
     // Check database connection
     @Override
-    public void initialize(URL location, ResourceBundle resources){
-        if (loginModel.isDbConnected()){
+    public void initialize(URL location, ResourceBundle resources) {
+        if (loginModel.isDbConnected()) {
             isConnected.setText("Connected");
-        }else{
+        } else {
             isConnected.setText("Not Connected");
         }
 
@@ -49,20 +46,20 @@ public class LoginController implements Initializable {
         singleton.changeScene("main/ui/register.fxml");
     }
 
-    public void login(MouseEvent event){
+    public void login(MouseEvent event) {
 
         try {
             //atemptLogin is set to either false, meaning the login failed, or is set to the users account type
-            String attemptLogin = loginModel.isLogin(txtUsername.getText().trim(),txtPassword.getText().trim());
+            String attemptLogin = loginModel.attemptLogin(txtUsername.getText().trim(), txtPassword.getText().trim());
             if (attemptLogin.equals("deactivated"))
                 isConnected.setText("Sorry, your account is currently deactivated");
-            else if (!attemptLogin.equals("false")){
+            else if (!attemptLogin.equals("false")) {
                 if (attemptLogin.equals("employee"))
                     singleton.changeScene("main/ui/user/userHome.fxml");
                 else if (attemptLogin.equals("admin"))
                     singleton.changeScene("main/ui/admin/adminHome.fxml");
 
-            }else{
+            } else {
                 isConnected.setText("username and password is incorrect");
             }
         } catch (SQLException | IOException e) {
@@ -76,10 +73,7 @@ public class LoginController implements Initializable {
     }
 
 
-
-
     //11.2.3 big sur
-
 
 
 }

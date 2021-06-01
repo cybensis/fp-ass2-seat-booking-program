@@ -12,9 +12,11 @@ import java.sql.SQLException;
 public class SelectUserModel {
     private Singleton singleton = Singleton.getInstance();
 
+    // This method takes a userID and an accountType (either admin or basic) to put into the query to check if that
+    // user exists.
     public String searchUserID(String userID, String accountType) throws SQLException {
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet=null;
+        ResultSet resultSet = null;
         String query = "SELECT * FROM user INNER JOIN accountTypes ON user.accountType = accountTypes.accountTypeID WHERE user.employeeID = ? AND accountTypes.accountType = ?";
         try {
             preparedStatement = singleton.getConnection().prepareStatement(query);
@@ -25,11 +27,9 @@ public class SelectUserModel {
                 return "found";
             else
                 return "No user was found with this ID";
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return "Sorry, an unexpected error occurred";
-        }finally {
+        } finally {
             if (preparedStatement != null)
                 preparedStatement.close();
             if (resultSet != null)

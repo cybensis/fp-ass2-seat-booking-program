@@ -37,8 +37,7 @@ public class CreateBookingPopupController {
                 popupText.setText("Are you sure you want to change this booking?");
                 response = createBookingModel.updateBooking();
                 singleton.setUpdateBooking(false);
-            }
-            else
+            } else
                 response = createBookingModel.addBooking();
 
             accept.setVisible(false);

@@ -42,8 +42,7 @@ public class SelectUserController {
                 singleton.changeScene("main/ui/admin/addUpdateAccount.fxml");
             else if (singleton.getAccountManagementDetails("accountAction").equals("deleteAccount") || singleton.getAccountManagementDetails("accountAction").equals("deactivateAccount"))
                 singleton.changeScene("main/ui/admin/deactivateUser.fxml");
-        }
-        else {
+        } else {
             errorText.setText(response);
             errorText.setVisible(true);
         }
@@ -51,16 +50,15 @@ public class SelectUserController {
     }
 
 
-    private String searchUser() throws SQLException{
+    private String searchUser() throws SQLException {
         int employeeID;
         try {
             employeeID = Integer.parseInt(employeeIDField.getText().trim());
             if (singleton.getAccountManagementDetails("accountType").equals("admin"))
-                return  selectUserModel.searchUserID( employeeIDField.getText(), "admin");
+                return selectUserModel.searchUserID(employeeIDField.getText(), "admin");
             else
-                return selectUserModel.searchUserID( employeeIDField.getText(), "employee");
-        }
-        catch (NumberFormatException error) {
+                return selectUserModel.searchUserID(employeeIDField.getText(), "employee");
+        } catch (NumberFormatException error) {
             return "Please make sure you've input a number";
         }
     }

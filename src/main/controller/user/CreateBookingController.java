@@ -50,14 +50,18 @@ public class CreateBookingController {
     private void initialize() throws SQLException, IOException {
         rectangleContainer = new Rectangle[]{seat_0, seat_1, seat_2, seat_3, seat_4, seat_5, seat_6, seat_7, seat_8, seat_9, seat_10, seat_11, seat_12, seat_13, seat_14, seat_15};
         LocalDate chosenDate = singleton.getDate();
-        if (singleton.getUpdateBooking())
-            sceneHeader.setText("Update booking - " + chosenDate);
-        else
-            sceneHeader.setText("Create a new booking - " + chosenDate);
+        String sceneHeaderText = (singleton.getUpdateBooking()) ? "Update booking - " + chosenDate : "Create a new booking - " + chosenDate;
+        sceneHeader.setText(sceneHeaderText);
+
+        // These 6 lines get the seating status and blocked seats for the current user
         String seatingStatus = createBookingModel.getSeatingStatus();
-        int pastAndFutureBookedSeat[] = createBookingModel.getBlockedDesks();
+        int pastAndFutureBookedDesks[] = createBookingModel.getUsersBlockedDesks();
+        int blockedNeighborDesks[] = new int[0];
+        if (pastAndFutureBookedDesks != null)
+            blockedNeighborDesks = createBookingModel.getBlockedNeighborDesks(rectangleContainer.length, pastAndFutureBookedDesks[0]);
         tablesBooked = createBookingModel.blacklistedDesks();
-        if (seatingStatus.equals("Error") || pastAndFutureBookedSeat == null || tablesBooked == null) {
+
+        if (seatingStatus.equals("Error") || pastAndFutureBookedDesks == null || tablesBooked == null || blockedNeighborDesks == null) {
             sceneHeader.setText("An unexpected error has occurred, please try again");
             return;
         }
@@ -85,15 +89,25 @@ public class CreateBookingController {
         } else if (seatingStatus.equals("Normal"))
             for (int i = 0; i < tablesBooked.size(); i++) {
                 disableSeat(tablesBooked.get(i), "booked");
+
+                // This for each block, blocks the two neighboring seats, of employees who the current user last sat
+                // next to, but this only applies when normal conditions are active, since under COVID conditions, there
+                // can be no sitting next to one another.
+                for (int desk : blockedNeighborDesks) {
+                    if (desk >= 0)
+                        disableSeat(desk, "booked");
+                }
             }
-        // This blocks the most recent seat the user booked, both in the past and future.
-        for (int desk : pastAndFutureBookedSeat) {
+        // This blocks the most recent seat the user booked, both in the past and future, if the user has no past or
+        // future bookings then the array will keep the default initialized values of -1, hence the if (desk >= 0)
+        for (int desk : pastAndFutureBookedDesks) {
             if (desk >= 0)
-                disableSeat(desk, "covid");
+                disableSeat(desk, "booked");
         }
+
     }
 
-
+    // This creates an event that allows a user to click on a rectangle which will initiate a booking confirmation.
     private void createDeskClickEvent() {
         for (int i = 0; i < rectangleContainer.length; i++) {
             int deskID = i;
@@ -127,6 +141,7 @@ public class CreateBookingController {
         }
     }
 
+    // This will block a seat to prevent it from being clicked and booked, and can be blocked under 2 conditions
     private void disableSeat(int deskID, String condition) {
         if (!rectangleContainer[deskID].isDisabled() && condition.equals("covid"))
             rectangleContainer[deskID].setFill(Paint.valueOf("ORANGE"));

@@ -42,7 +42,7 @@ public class ViewBookingsController {
     private TableView<BookingTableRow> bookingTable;
 
     @FXML
-    private TableColumn<BookingTableRow,String> employeeIDColumn;
+    private TableColumn<BookingTableRow, String> employeeIDColumn;
 
     @FXML
     private TableColumn<BookingTableRow, String> nameColumn;
@@ -68,17 +68,15 @@ public class ViewBookingsController {
         if (singleton.getViewBookingsType().equals("existingBookings")) {
             subHeader.setText("View existing bookings");
             bookingTableRows = viewBookingsModel.getBookings("active");
-        }
-        else {
+        } else {
             subHeader.setText("View booking requests");
-           bookingTableRows = viewBookingsModel.getBookings("review");
+            bookingTableRows = viewBookingsModel.getBookings("review");
         }
         if (bookingTableRows != null) {
             for (int i = 0; i < bookingTableRows.length; i++) {
                 bookingTable.getItems().add(bookingTableRows[i]);
             }
-        }
-        else {
+        } else {
             errorMessage.setVisible(true);
         }
     }
@@ -107,9 +105,8 @@ public class ViewBookingsController {
     @FXML
     private void selectRow(MouseEvent event) {
         try {
-        String testForNull = bookingTable.getSelectionModel().getSelectedItem().getDate();
-        }
-        catch (NullPointerException error) {
+            String testForNull = bookingTable.getSelectionModel().getSelectedItem().getDate();
+        } catch (NullPointerException error) {
             acceptButton.setVisible(false);
             rejectButton.setVisible(false);
             selectedRow = null;
@@ -119,8 +116,7 @@ public class ViewBookingsController {
             acceptButton.setVisible(false);
             rejectButton.setVisible(false);
             removeButton.setVisible(true);
-        }
-        else {
+        } else {
             acceptButton.setVisible(true);
             rejectButton.setVisible(true);
         }

@@ -51,8 +51,7 @@ public class ChooseDateController {
         if (singleton.getAdminDateType().equals("graphic")) {
             subHeader.setText("Graphic visualisation");
             dateText.setText("What day would you like to look at?");
-        }
-        else if (singleton.getAdminDateType().equals("generateReports")) {
+        } else if (singleton.getAdminDateType().equals("generateReports")) {
             subHeader.setText("Generate reports");
             dateText.setText("What day would you like to generate reports for?");
         }
@@ -68,12 +67,10 @@ public class ChooseDateController {
             singleton.setAdminDateType("");
             singleton.setDate(dateField.getValue());
             singleton.changeScene("main/ui/admin/seatingStatus.fxml");
-        }
-        else if (singleton.getAdminDateType().equals("graphic")){
+        } else if (singleton.getAdminDateType().equals("graphic")) {
             singleton.setDate(dateField.getValue());
             singleton.changeScene("main/ui/admin/graphicVisualisation.fxml");
-        }
-        else if (singleton.getAdminDateType().equals("generateReports")) {
+        } else if (singleton.getAdminDateType().equals("generateReports")) {
             singleton.setDate(dateField.getValue());
             singleton.changeScene("main/ui/admin/downloadReport.fxml");
         }

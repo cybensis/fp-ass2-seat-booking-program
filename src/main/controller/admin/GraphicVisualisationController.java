@@ -34,6 +34,8 @@ public class GraphicVisualisationController {
 
     @FXML
     private void initialize() throws SQLException, IOException {
+        // This is all pretty much the same as the users CreateBookingController, but obviously the desks that are
+        // blocked specific to the logged in user are irrelevant here.
         rectangleContainer = new Rectangle[]{seat_0, seat_1, seat_2, seat_3, seat_4, seat_5, seat_6, seat_7, seat_8, seat_9, seat_10, seat_11, seat_12, seat_13, seat_14, seat_15};
         LocalDate chosenDate = singleton.getDate();
         subHeader.setText("Graphic visualisation - " + chosenDate);
