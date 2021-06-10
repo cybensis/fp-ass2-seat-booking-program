@@ -1,4 +1,4 @@
-#Further Programming Assignment 2 - Guy Seccull (s3785085)
+# Further Programming Assignment 2 - Guy Seccull (s3785085)
 
 ## How to run
 1. To run this program, start by cloning it into a Java IDE, I've only tested on IntelliJ so use this to prevent 
@@ -15,7 +15,7 @@ Using IntelliJ or SQLiteBrowser, you can view the database to see what accounts 
 BCrypt to hash passwords so you won't be able to view them in plaintext, but <b>all the accounts that are set up
 use <i>password</i> as the password.</b>
 
-##Design Choices
+## Design Choices
 1. I have used the Singleton pattern to be able to pass data between different scenes.
 2. As taught to us in Software Engineering Fundamentals, the MVC architecture works when the view takes input from a 
    user, which is sent to a controller to sanitize or do whatever needs to be done, then it sends that data to the 
