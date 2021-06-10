@@ -1,82 +1,37 @@
-# Readme
+#Further Programming Assignment 2 - Guy Seccull (s3785085)
 
-This README should be completed by the student
+## How to run
+1. To run this program, start by cloning it into a Java IDE, I've only tested on IntelliJ so use this to prevent 
+   unexpected errors.
+2. Once loaded up in IntelliJ, right click the root directory folder (assignment-2-GuySeccull) in the file viewer in 
+   IntelliJ and select the "Open Module Settings" option. In the "Modules" sub-menu, set the "Language Level" to 8. 
+   After this go into the "Project" menu just above "Modules" and set the Project SDK to version 1.8, I've used 
+   corretto-1.8 so if all else fails, try using corretto.
+4. After changing these settings, exit the settings menu, and set the Main class to 
+   assignment-2-GuySeccull/src/main/Main.java, from there it should be able to run. 
 
-# Packaging
-The main class is Main.java
+The database comes with pre-existing data but will likely be out of date by the time of use, so the only useful data would be the accounts. 
+Using IntelliJ or SQLiteBrowser, you can view the database to see what accounts are set up, although my program uses
+BCrypt to hash passwords so you won't be able to view them in plaintext, but <b>all the accounts that are set up
+use <i>password</i> as the password.</b>
 
-Packaging for classes:
- - main.controller
- - main.model
- - main.ui
-Packaging for test:
- - test.model
-
-## How to clone the project using intelliJIDEA and RUN the application
-1- Download IntelliJ IDEA Ultimate Version (You had to apply for student license)
-
-2- Open IntelliJ IDEA, select "File" from the top menu, select "New" and select "Project from Version Control"  
-
-3- Copy your Github classroom repository and paste into URL, click on "Clone".
- Your project will be cloned and open in your IntelliJ IDEA window.
- 
- However, you still need to add the SQLite jar file to your project so you can have access to your database. Follow next steps for adding the Jar file:
- 
-1- Download the SQLite JDBC jar file from week 7 Canvas module.
-
-2- In your project under project root, make a new directory called lib and move the jar file into lib folder
-
-3- Open IntelliJ IDEA, click on "File", open "Project Structure"
-
-4- Under "Project Setting", select "Libraries"
-
-5- Click + button, choose Java, and navigate to your project folder, then Lib folder, choose "sqlite-jdbc-3.34.0.jar", and click on "open"
-
-6- Click on Apply and then OK to close the window
-
-Now you are ready to Run the Application.
-
-Simply right click on Main.java and choose Run.
-Congratulations!
-
-Login info:
-
-Username: test
-
-Password: test
-
-
-## Prepare other content
-
-Readme files are made for developers (including you), but also could be used for the final users.
-So while you are writing your readme files please consider a few things:
-
-1. What is about?
-    - Your name and student number and course name on the top
-    - Describe the content of your project or repository
-    - Explain things the users would have a hard time understanding right away
-2. What steps need to be taken?
-    - Any specific steps for running your application, what is the main class?
-    - Is there any requirements or dependencies?
-    - After the installation, how they compile or run the code?
-3. Execution examples
-    - You could provide examples of execution with code and screenshots
-    
-
-other things you could add:
-
-- Table of content
-- Test cases
-- Know bugs
-- Things that have not been working or complete
-
-
-
-### References and tutorials for Readme (Markdown)
-- **IntelliJ IDEA MarkDown guide**. jetbrains.com/help/idea/markdown.html
-- **Choose an open source license**. Github. Available at: https://choosealicense.com/
-- **Getting started with writing and formatting on Github**. Github. Available at: https://help.github.com/articles/getting-started-with-writing-and-formatting-on-github/
-- **Markdown here cheatsheet**. Markdown Here Wiki. Available at: https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet
-- **Markdown quick reference**. Wordpress. Available at: https://en.support.wordpress.com/markdown-quick-reference/
-- **readme-template**. Dan Bader. Github. Available at: https://github.com/dbader/readme-template
-- Writing READMEs. **Udacity**. Available at: https://classroom.udacity.com/courses/ud777/
+##Design Choices
+1. I have used the Singleton pattern to be able to pass data between different scenes.
+2. As taught to us in Software Engineering Fundamentals, the MVC architecture works when the view takes input from a 
+   user, which is sent to a controller to sanitize or do whatever needs to be done, then it sends that data to the 
+   model to retrieve data, which is then sent/displayed directly to the view. In my program I have chosen to use the 
+   3-Tier architecture instead of MVC, as I believe it is better that the Model, passes the data back to the controller,
+   which then updates the view, as it is likely some modifications will need to be done to the data before being 
+   displayed, which is better done in the controller classes, not in the model. I have also chosen to keep the 
+   Model-View-Controller naming scheme, just as personal preference.
+3. In the assignment specifications sheet, using a whitelisting technique was mentioned to prevent booking the same seat
+   twice in a row, I chose not to implement a whitelist into my database, but instead utilise nested SQL queries and 
+   joins, along with code, to make this work.
+4. As a requirement, an admin must be able to change the seating conditions for a date, but it wasn't specified what 
+   happens if that date already has bookings. I chose to prevent an admin from changing seating conditions until all 
+   existing bookings have been deleted via the "Cancels Bookings" part of the program.
+5. While it is likely important that accepted bookings be kept in the database, even if they were from months ago, I've
+   assumed that those bookings that weren't accepted by admins in time, will be deleted, since rejecting a booking 
+   deletes it from the database, it makes sense to assume that an admin not accepting a booking can be viewed the same 
+   as rejecting it.
+   
