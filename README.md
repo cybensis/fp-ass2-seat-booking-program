@@ -1,5 +1,7 @@
 # Further Programming Assignment 2 - Guy Seccull (s3785085)
 
+This is a Java application with a JavaFX GUI made through Scene Builder that allows students of a fake school to make an account through the app, login, then book a seat, with COVID seating restrictions in place. 
+
 ## How to run
 1. To run this program, start by cloning it into a Java IDE, I've only tested on IntelliJ so use this to prevent 
    unexpected errors.
